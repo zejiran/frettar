@@ -1,0 +1,86 @@
+import React from 'react';
+import { FretCellProps } from '@/types';
+import { musicTheoryService } from '@/utils/musicTheory';
+
+export const FretCell: React.FC<FretCellProps> = ({
+  string,
+  fret,
+  isSelected,
+  color,
+  annotation,
+  currentColor,
+  onCellClick,
+  onCellRightClick,
+  isLastFret = false,
+}) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onCellClick(string, fret);
+  };
+
+  const handleRightClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onCellRightClick(string, fret);
+  };
+
+  // Get both note variants (sharp/flat)
+  const noteWithVariants = musicTheoryService.getNoteWithBothVariants(string, fret);
+
+  return (
+    <div
+      className={`
+        relative w-11 h-15 flex items-center justify-center
+        cursor-pointer transition-all duration-300 bg-white hover:bg-gray-50
+        hover:scale-110 group shadow-sm hover:shadow-md overflow-visible
+        ${!isLastFret ? 'border-r border-gray-400' : ''}
+        ${isSelected ? 'rounded-full border-3 border-gray-900 ring-2 ring-blue-500' : ''}
+      `}
+      style={{
+        backgroundColor: isSelected ? color : 'white',
+        boxShadow: isSelected ? `0 0 0 2px ${color}30, 0 4px 8px rgba(0,0,0,0.1)` : undefined,
+      }}
+      onClick={handleClick}
+      onContextMenu={handleRightClick}
+      data-string={string}
+      data-fret={fret}
+    >
+      {/* Note display */}
+      <div className={`font-bold select-none transition-colors duration-200 text-center ${
+        isSelected ? 'text-gray-900' : 'text-gray-600'
+      } ${noteWithVariants.includes('/') ? 'note-variants' : 'text-xs md:text-xs sm:text-2xs'}`}>
+        {noteWithVariants}
+      </div>
+
+      {/* Annotation */}
+      {annotation && (
+        <div className="absolute top-0 left-0 text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-1 py-0.5 shadow-md z-20 border border-gray-200 whitespace-nowrap">
+          {annotation}
+        </div>
+      )}
+
+      {/* Hover indicator */}
+      {!isSelected && (
+        <div
+          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-40 transition-all duration-300 transform group-hover:scale-110"
+          style={{ backgroundColor: currentColor }}
+        />
+      )}
+
+      {/* Fret markers for specific positions */}
+      {(fret === 3 || fret === 5 || fret === 7 || fret === 9 || fret === 15 || fret === 17 || fret === 19 || fret === 21) && string === 2 && (
+        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+      )}
+
+      {/* Double dots for 12th fret */}
+      {fret === 12 && (string === 1 || string === 4) && (
+        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+      )}
+
+      {/*  Double dots for 24th fret */}
+      {fret === 24 && (string === 1 || string === 4) && (
+        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+      )}
+
+    </div>
+  );
+};
