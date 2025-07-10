@@ -57,7 +57,7 @@ export const FretCell: React.FC<FretCellProps> = ({
 
 
       {annotation && (
-        <div className="absolute top-0 left-0 text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-1 py-0.5 shadow-md z-20 border border-gray-200 whitespace-nowrap">
+        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-2 py-1 shadow-lg z-30 border border-gray-200 whitespace-nowrap min-w-max">
           {annotation}
         </div>
       )}

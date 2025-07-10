@@ -101,7 +101,7 @@ export const exportService: ExportService = {
           0 20px 25px -5px rgba(0, 0, 0, 0.1),
           0 10px 10px -5px rgba(0, 0, 0, 0.04),
           inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        overflow: hidden;
+        overflow: visible;
       `;
 
       const originalFretCells = fretboardRef.current.querySelectorAll('[data-string]');
@@ -308,6 +308,7 @@ export const exportToCanvas = async (
       border-radius: 16px;
       background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      overflow: visible;
     `;
 
     const originalFretCells = fretboardRef.current.querySelectorAll('[data-string]');
