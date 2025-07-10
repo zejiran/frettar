@@ -12,6 +12,8 @@
 
 This fretboard map maker allows you to export your layout creations as images to share them, perfect for creating note layouts on the fretboard to represent scales, chords, and more.
 
+<img width="1561" height="916" alt="UI Screenshot" src="https://github.com/user-attachments/assets/d6b4a8b0-a525-4ad7-b19c-67628be8e170" />
+
 ## ✨ Features
 
 ### 🎯 Interactive Fretboard
