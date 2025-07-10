@@ -11,7 +11,6 @@ import { logClipboardDiagnostics } from '@/utils/clipboardTest';
 import { Guitar } from 'lucide-react';
 
 export const App: React.FC = () => {
-  // State management
   const [fretboardState, setFretboardState] = useState<FretboardState>({});
   const [currentColor, setCurrentColor] = useState('#ffeb3b');
   const [savedConfigurations, setSavedConfigurations] = useState<SavedConfiguration[]>(
@@ -24,7 +23,6 @@ export const App: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [isClipboardSupported, setIsClipboardSupported] = useState<boolean>(false);
 
-  // Refs
   const fretboardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,12 +30,10 @@ export const App: React.FC = () => {
     setIsClipboardSupported(clipboardCheck.supported);
   }, []);
 
-  // Utility functions
   const getCellKey = (string: number, fret: number): string => {
     return `${string}-${fret}`;
   };
 
-  // Event handlers
   const handleCellClick = useCallback((string: number, fret: number) => {
     const key = getCellKey(string, fret);
 
@@ -45,10 +41,8 @@ export const App: React.FC = () => {
       const newState = { ...prev };
 
       if (newState[key]) {
-        // Remove selection
         delete newState[key];
       } else {
-        // Add selection
         newState[key] = {
           color: currentColor,
           annotation: ''
@@ -149,12 +143,10 @@ export const App: React.FC = () => {
 
   const handleImportConfigurations = useCallback((importedConfigs: SavedConfiguration[]) => {
     try {
-      // Save each imported configuration
       importedConfigs.forEach(config => {
         localStorageService.saveConfiguration(config);
       });
 
-      // Refresh the configurations list
       setSavedConfigurations(localStorageService.getConfigurations());
     } catch (error) {
       console.error('Failed to import configurations:', error);

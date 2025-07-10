@@ -36,7 +36,6 @@ export const Fretboard: React.FC<FretboardProps> = ({
   const renderStringRow = (stringIndex: number) => {
     const cells = [];
 
-    // String label
     cells.push(
       <div
         key={`string-${stringIndex}`}
@@ -46,7 +45,6 @@ export const Fretboard: React.FC<FretboardProps> = ({
       </div>
     );
 
-    // Fret cells
     for (let fret = 0; fret <= numberOfFrets; fret++) {
       const note = musicTheoryService.getNote(stringIndex, fret);
       const cellKey = getCellKey(stringIndex, fret);

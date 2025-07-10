@@ -77,17 +77,14 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
         return;
       }
 
-      // Generate new IDs to avoid conflicts and call the import callback
       const newConfigs = importedConfigurations.map(config => ({
         ...config,
-        id: Date.now() + Math.random(), // Generate new IDs to avoid conflicts
+        id: Date.now() + Math.random()
       }));
 
-      // Call the import callback to update the parent component
       onImport(newConfigs);
       alert(`Successfully imported ${newConfigs.length} configuration(s).`);
 
-      // Clear the file input
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -246,7 +243,6 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                       <div className="flex gap-1">
                         <button
                           onClick={() => {
-                            // Create filename with sanitized title
                             const sanitizedTitle = config.name.trim().replace(/[^a-zA-Z0-9\-_\s]/g, '').replace(/\s+/g, '-');
                             const dateStr = new Date().toISOString().split('T')[0];
                             const filename = `fretboard-config-${sanitizedTitle}-${dateStr}.json`;
@@ -272,7 +268,6 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
           </div>
         )}
 
-        {/* Import/Export section */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex justify-center gap-4">
             <button

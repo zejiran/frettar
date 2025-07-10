@@ -37,7 +37,6 @@ export const musicTheoryService: MusicTheoryService = {
     const sharpNote = NOTE_SEQUENCE[noteIndex];
     const flatNote = NOTE_SEQUENCE_FLATS[noteIndex];
 
-    // If they're different, show both variants
     if (sharpNote !== flatNote) {
       return `${sharpNote}/${flatNote}`;
     }
@@ -62,7 +61,6 @@ export const musicTheoryService: MusicTheoryService = {
   }
 };
 
-// Helper functions for note calculations
 export const getNoteColor = (note: string): string => {
   const colorMap: Record<string, string> = {
     'C': '#FF6B6B',
@@ -83,16 +81,16 @@ export const getNoteColor = (note: string): string => {
 };
 
 export const getFrequency = (stringIndex: number, fretNumber: number): number => {
-  // Base frequencies for open strings in Hz
+
   const baseFequencies = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63]; // E, A, D, G, B, E
 
   if (stringIndex < 0 || stringIndex >= baseFequencies.length) {
     throw new Error(`Invalid string index: ${stringIndex}`);
   }
 
-  // Each fret increases the frequency by a factor of 2^(1/12)
+
   const frequency = baseFequencies[stringIndex] * Math.pow(2, fretNumber / 12);
-  return Math.round(frequency * 100) / 100; // Round to 2 decimal places
+  return Math.round(frequency * 100) / 100;
 };
 
 export const getInterval = (fromNote: string, toNote: string): string => {

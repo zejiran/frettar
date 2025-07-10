@@ -10,7 +10,6 @@ export const localStorageService: LocalStorageService = {
 
       const parsed = JSON.parse(stored);
 
-      // Validate the structure
       if (!Array.isArray(parsed)) return [];
 
       return parsed.filter((config: unknown): config is SavedConfiguration => {
@@ -65,7 +64,6 @@ export const localStorageService: LocalStorageService = {
   }
 };
 
-// Helper functions for other localStorage operations
 export const getStorageSize = (): number => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -162,7 +160,6 @@ export const getStorageQuota = (): Promise<{ used: number; total: number }> => {
         });
       }).catch(reject);
     } else {
-      // Fallback for browsers without storage API
       const used = getStorageSize();
       resolve({
         used,

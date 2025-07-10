@@ -27,7 +27,7 @@ export const SaveModal: React.FC<SaveModalProps> = ({
 
     setIsSubmitting(true);
     try {
-      await onSave(trimmedName);
+      onSave(trimmedName);
       onClose();
     } catch (error) {
       console.error('Error saving configuration:', error);

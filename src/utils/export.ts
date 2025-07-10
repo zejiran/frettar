@@ -42,7 +42,6 @@ const DEFAULT_EXPORT_OPTIONS: ExportOptions = {
   scale: 2,
 };
 
-// Helper function to create filename with title
 const createFilename = (title?: string, format: string = 'png'): string => {
   const sanitizedTitle = title ? title.trim().replace(/[^a-zA-Z0-9\-_\s]/g, '').replace(/\s+/g, '-') : '';
   const dateStr = new Date().toISOString().split('T')[0];
@@ -65,7 +64,6 @@ export const exportService: ExportService = {
     }
 
     try {
-      // Create a wrapper with better styling for export
       const exportWrapper = document.createElement('div');
       exportWrapper.style.cssText = `
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -76,7 +74,6 @@ export const exportService: ExportService = {
         position: relative;
       `;
 
-      // Add main title - use user title if provided, otherwise default
       const mainTitle = document.createElement('div');
       mainTitle.style.cssText = `
         text-align: center;
@@ -95,7 +92,6 @@ export const exportService: ExportService = {
 
       exportWrapper.appendChild(mainTitle);
 
-      // Clone the fretboard with enhanced styling
       const fretboardClone = fretboardRef.current.cloneNode(true) as HTMLElement;
       fretboardClone.style.cssText = `
         border: 4px solid #1e293b;
@@ -173,7 +169,6 @@ export const exportService: ExportService = {
         }
       });
 
-      // Enhance string labels
       const stringLabels = fretboardClone.querySelectorAll('.w-15.h-15');
       stringLabels.forEach((label: Element) => {
         const htmlLabel = label as HTMLElement;
@@ -186,9 +181,6 @@ export const exportService: ExportService = {
         `;
       });
 
-      // Enhance fret numbers - this will be handled by the fret header section above
-
-      // Apply export styling to fret number cells with seamless padding
       const fretNumberCells = fretboardClone.querySelectorAll('.w-11');
       fretNumberCells.forEach((cell: Element) => {
         const htmlCell = cell as HTMLElement;
@@ -207,7 +199,6 @@ export const exportService: ExportService = {
         }
       });
 
-      // Ensure the FRETS label has the same height and background
       const fretsLabel = fretboardClone.querySelector('.w-15');
       if (fretsLabel) {
         const htmlFretsLabel = fretsLabel as HTMLElement;
@@ -226,7 +217,6 @@ export const exportService: ExportService = {
 
       exportWrapper.appendChild(fretboardClone);
 
-      // Add footer
       const footer = document.createElement('div');
       footer.style.cssText = `
         text-align: center;
@@ -238,7 +228,6 @@ export const exportService: ExportService = {
       footer.innerHTML = `Generated on ${new Date().toLocaleDateString()} • frettar.pages.dev`;
       exportWrapper.appendChild(footer);
 
-      // Temporarily add to DOM for rendering
       exportWrapper.style.position = 'absolute';
       exportWrapper.style.left = '-9999px';
       exportWrapper.style.top = '-9999px';
@@ -254,7 +243,6 @@ export const exportService: ExportService = {
         height: exportWrapper.scrollHeight,
       });
 
-      // Clean up
       document.body.removeChild(exportWrapper);
 
       const link = document.createElement('a');
@@ -289,7 +277,6 @@ export const exportToCanvas = async (
   }
 
   try {
-    // Create enhanced wrapper for canvas export
     const exportWrapper = document.createElement('div');
     exportWrapper.style.cssText = `
       background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
@@ -299,7 +286,6 @@ export const exportToCanvas = async (
       font-family: 'Inter', sans-serif;
     `;
 
-    // Add title if provided
     if (title && title.trim()) {
       const titleElement = document.createElement('div');
       titleElement.style.cssText = `
@@ -434,29 +420,24 @@ export const copyToClipboard = async (
         throw new Error('Clipboard access denied. Please allow clipboard permissions in your browser settings.');
       }
     } catch (permissionError) {
-      // Some browsers don't support permissions query for clipboard-write
       console.warn('Could not check clipboard permissions:', permissionError);
     }
 
-    // Create the blob with error handling
     const blob = await exportToBlob(fretboardRef, options, title);
 
     if (!blob || blob.size === 0) {
       throw new Error('Failed to generate image for clipboard');
     }
 
-    // Check blob size (most browsers have a 20MB limit)
     const maxSize = 20 * 1024 * 1024; // 20MB
     if (blob.size > maxSize) {
       throw new Error('Image too large for clipboard. Try reducing the scale or fretboard size.');
     }
 
-    // Create clipboard item with the correct MIME type
     const clipboardItem = new ClipboardItem({
       [blob.type]: blob
     });
 
-    // Attempt to write to clipboard with timeout
     const writePromise = navigator.clipboard.write([clipboardItem]);
     const timeoutPromise = new Promise<never>((_, reject) =>
       setTimeout(() => reject(new Error('Clipboard operation timed out')), 10000)
@@ -549,7 +530,6 @@ export const printFretboard = async (
     printWindow.document.close();
     printWindow.focus();
 
-    // Wait for image to load before printing
     const img = printWindow.document.querySelector('img') as HTMLImageElement;
     img.onload = () => {
       printWindow.print();

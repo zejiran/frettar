@@ -1,6 +1,3 @@
-// Utility for testing and debugging clipboard functionality
-// This helps diagnose clipboard issues users might encounter
-
 export interface ClipboardTestResult {
   supported: boolean;
   secure: boolean;
@@ -20,7 +17,6 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     suggestions: []
   };
 
-  // Detect browser
   const userAgent = navigator.userAgent;
   if (userAgent.includes('Chrome')) {
     result.browser = 'Chrome';
@@ -34,19 +30,16 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     result.browser = 'Unknown';
   }
 
-  // Check secure context
   result.secure = window.isSecureContext;
   if (!result.secure) {
     result.errors.push('Site is not in a secure context (HTTPS required)');
     result.suggestions.push('Access the site via HTTPS instead of HTTP');
   }
 
-  // Check clipboard API availability
   if (!navigator.clipboard) {
     result.errors.push('Clipboard API not available');
     result.suggestions.push('Update to a modern browser that supports the Clipboard API');
   } else {
-    // Check specific clipboard methods
     if (typeof navigator.clipboard.write !== 'function') {
       result.errors.push('Clipboard write method not available');
       result.suggestions.push('Browser does not support clipboard.write()');
@@ -57,13 +50,11 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     }
   }
 
-  // Check ClipboardItem constructor
   if (!window.ClipboardItem) {
     result.errors.push('ClipboardItem constructor not available');
     result.suggestions.push('Browser does not support ClipboardItem - try Chrome 76+ or Firefox 87+');
   }
 
-  // Test permissions if available
   try {
     if (navigator.permissions && navigator.permissions.query) {
       const permission = await navigator.permissions.query({
@@ -81,11 +72,9 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     console.warn('Permission query failed:', error);
   }
 
-  // Test basic clipboard functionality
   if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function' && result.secure) {
     try {
       await navigator.clipboard.writeText('test');
-      // If we got here, basic text clipboard works
       if (window.ClipboardItem && typeof navigator.clipboard.write === 'function') {
         result.supported = true;
       } else {
@@ -100,7 +89,6 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     }
   }
 
-  // Browser-specific suggestions
   if (result.browser === 'Safari' && parseFloat(userAgent.match(/Version\/(\d+)/)?.[1] || '0') < 13.1) {
     result.suggestions.push('Safari 13.1+ required for clipboard support');
   }
@@ -109,7 +97,6 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     result.suggestions.push('Firefox 87+ required for full clipboard support');
   }
 
-  // Mobile browser considerations
   if (/Mobi|Android/i.test(userAgent)) {
     result.suggestions.push('Mobile browsers may have limited clipboard support');
     if (result.browser === 'Safari') {
@@ -117,7 +104,6 @@ export const runClipboardTest = async (): Promise<ClipboardTestResult> => {
     }
   }
 
-  // Add general suggestions if there are errors
   if (result.errors.length > 0) {
     result.suggestions.push('Use the Export button as an alternative to clipboard');
     result.suggestions.push('Try a different browser (Chrome/Edge recommended)');
@@ -150,5 +136,4 @@ export const logClipboardDiagnostics = async (): Promise<void> => {
   console.groupEnd();
 };
 
-// Quick test function that can be called from browser console
 (window as any).testClipboard = logClipboardDiagnostics;
