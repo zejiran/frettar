@@ -230,7 +230,7 @@ export const exportService: ExportService = {
         color: #64748b;
         font-style: italic;
       `;
-      footer.innerHTML = `Generated on ${new Date().toLocaleDateString()} • frettar.pages.dev`;
+      footer.innerHTML = `frettar.pages.dev`;
       exportWrapper.appendChild(footer);
 
       exportWrapper.style.position = 'absolute';
