@@ -38,6 +38,7 @@ export const FretCell: React.FC<FretCellProps> = ({
       style={{
         backgroundColor: isSelected ? color : 'white',
         boxShadow: isSelected ? `0 0 0 2px ${color}30, 0 4px 8px rgba(0,0,0,0.1)` : undefined,
+        transform: isSelected ? 'scale(0.95)' : undefined,
       }}
       onClick={handleClick}
       onContextMenu={handleRightClick}
@@ -61,23 +62,27 @@ export const FretCell: React.FC<FretCellProps> = ({
       {/* Hover indicator */}
       {!isSelected && (
         <div
-          className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-40 transition-all duration-300 transform group-hover:scale-110"
-          style={{ backgroundColor: currentColor }}
+          className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-all duration-300 transform group-hover:scale-95"
+          style={{
+            backgroundColor: currentColor,
+            borderRadius: '50%',
+            border: '1px solid rgba(255,255,255,0.6)'
+          }}
         />
       )}
 
-      {/* Fret markers for specific positions */}
-      {(fret === 3 || fret === 5 || fret === 7 || fret === 9 || fret === 15 || fret === 17 || fret === 19 || fret === 21) && string === 2 && (
+      {/* Fret markers for specific positions - hidden when selected */}
+      {!isSelected && (fret === 3 || fret === 5 || fret === 7 || fret === 9 || fret === 15 || fret === 17 || fret === 19 || fret === 21) && string === 2 && (
         <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
-      {/* Double dots for 12th fret */}
-      {fret === 12 && (string === 1 || string === 4) && (
+      {/* Double dots for 12th fret - hidden when selected */}
+      {!isSelected && fret === 12 && (string === 1 || string === 4) && (
         <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
-      {/*  Double dots for 24th fret */}
-      {fret === 24 && (string === 1 || string === 4) && (
+      {/*  Double dots for 24th fret - hidden when selected */}
+      {!isSelected && fret === 24 && (string === 1 || string === 4) && (
         <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 

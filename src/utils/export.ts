@@ -108,21 +108,39 @@ export const exportService: ExportService = {
         overflow: hidden;
       `;
 
-      // Enhance fret cells for export
+      const originalFretCells = fretboardRef.current.querySelectorAll('[data-string]');
+      const cellStyles = new Map();
+
+      originalFretCells.forEach((cell: Element) => {
+        const htmlCell = cell as HTMLElement;
+        const computedStyle = window.getComputedStyle(htmlCell);
+        const key = `${htmlCell.dataset.string}-${htmlCell.dataset.fret}`;
+        cellStyles.set(key, {
+          borderRadius: computedStyle.borderRadius,
+          width: computedStyle.width,
+          height: computedStyle.height,
+          isSelected: htmlCell.style.backgroundColor &&
+                     htmlCell.style.backgroundColor !== 'white' &&
+                     htmlCell.style.backgroundColor !== '' &&
+                     htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)'
+        });
+      });
+
       const fretCells = fretboardClone.querySelectorAll('[data-string]');
       fretCells.forEach((cell: Element) => {
         const htmlCell = cell as HTMLElement;
-        const isSelected = htmlCell.classList.contains('selected') ||
-                          htmlCell.style.backgroundColor !== 'white' &&
-                          htmlCell.style.backgroundColor !== '';
+        const key = `${htmlCell.dataset.string}-${htmlCell.dataset.fret}`;
+        const originalStyle = cellStyles.get(key);
 
-        if (isSelected) {
+        if (originalStyle?.isSelected) {
+          htmlCell.style.borderRadius = '9999px';
           htmlCell.style.boxShadow = `
-            0 0 0 3px ${htmlCell.style.backgroundColor}40,
-            0 8px 16px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2)
+            0 0 0 2px ${htmlCell.style.backgroundColor}30,
+            0 4px 8px rgba(0, 0, 0, 0.1),
+            0 0 0 6px #3b82f6
           `;
-          htmlCell.style.border = '3px solid #1e293b';
+          htmlCell.style.border = '3px solid #111827';
+          htmlCell.style.transform = 'scale(0.95)';
         } else {
           htmlCell.style.boxShadow = 'inset 0 1px 2px rgba(0, 0, 0, 0.05)';
           htmlCell.style.border = '1px solid #cbd5e1';
@@ -132,6 +150,9 @@ export const exportService: ExportService = {
         htmlCell.style.fontSize = '10px';
         htmlCell.style.overflow = 'visible';
         htmlCell.style.position = 'relative';
+        htmlCell.style.display = 'flex';
+        htmlCell.style.alignItems = 'center';
+        htmlCell.style.justifyContent = 'center';
 
         const annotation = htmlCell.querySelector('.absolute');
         if (annotation) {
@@ -300,6 +321,40 @@ export const exportToCanvas = async (
       background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
     `;
+
+    const originalFretCells = fretboardRef.current.querySelectorAll('[data-string]');
+    const cellStyles = new Map();
+
+    originalFretCells.forEach((cell: Element) => {
+      const htmlCell = cell as HTMLElement;
+      const computedStyle = window.getComputedStyle(htmlCell);
+      const key = `${htmlCell.dataset.string}-${htmlCell.dataset.fret}`;
+      cellStyles.set(key, {
+        borderRadius: computedStyle.borderRadius,
+        isSelected: htmlCell.style.backgroundColor &&
+                   htmlCell.style.backgroundColor !== 'white' &&
+                   htmlCell.style.backgroundColor !== '' &&
+                   htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)'
+      });
+    });
+
+    const fretCells = fretboardClone.querySelectorAll('[data-string]');
+    fretCells.forEach((cell: Element) => {
+      const htmlCell = cell as HTMLElement;
+      const key = `${htmlCell.dataset.string}-${htmlCell.dataset.fret}`;
+      const originalStyle = cellStyles.get(key);
+
+      if (originalStyle?.isSelected) {
+        htmlCell.style.borderRadius = '9999px';
+        htmlCell.style.boxShadow = `
+          0 0 0 2px ${htmlCell.style.backgroundColor}30,
+          0 4px 8px rgba(0, 0, 0, 0.1),
+          0 0 0 6px #3b82f6
+        `;
+        htmlCell.style.border = '3px solid #111827';
+        htmlCell.style.transform = 'scale(0.95)';
+      }
+    });
 
     exportWrapper.appendChild(fretboardClone);
 
