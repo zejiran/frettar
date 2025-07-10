@@ -157,17 +157,20 @@ export const exportService: ExportService = {
           const htmlAnnotation = annotation as HTMLElement;
           htmlAnnotation.style.fontSize = '9px';
           htmlAnnotation.style.lineHeight = '1.2';
-          htmlAnnotation.style.padding = '1px 3px';
+          htmlAnnotation.style.padding = '0px 5px 10px 5px';
           htmlAnnotation.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
           htmlAnnotation.style.borderRadius = '3px';
           htmlAnnotation.style.border = '1px solid rgba(0, 0, 0, 0.1)';
           htmlAnnotation.style.zIndex = '10';
-          htmlAnnotation.style.minHeight = '24px';
+          htmlAnnotation.style.minHeight = '16px';
           htmlAnnotation.style.display = 'flex';
           htmlAnnotation.style.alignItems = 'center';
+          htmlAnnotation.style.justifyContent = 'center';
+          htmlAnnotation.style.textAlign = 'center';
           htmlAnnotation.style.maxWidth = 'none';
           htmlAnnotation.style.overflow = 'visible';
           htmlAnnotation.style.whiteSpace = 'nowrap';
+          htmlAnnotation.style.fontWeight = 'bold';
         }
       });
 

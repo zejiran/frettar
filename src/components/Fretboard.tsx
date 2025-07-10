@@ -76,8 +76,8 @@ export const Fretboard: React.FC<FretboardProps> = ({
   return (
     <>
       {/* Desktop/Tablet Layout (Horizontal) */}
-      <div className="hidden md:flex justify-center overflow-x-auto p-4">
-        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-visible inline-block">
+      <div className="hidden md:flex justify-center overflow-x-auto p-6 pt-8">
+        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-visible inline-block mt-4">
           {/* Fret numbers header */}
           <div className="flex border-b-3 border-gray-900 bg-gradient-to-r from-gray-700 to-gray-800">
             <div className="w-15 h-10 flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold border-r-2 border-gray-900 shadow-lg">
@@ -90,9 +90,10 @@ export const Fretboard: React.FC<FretboardProps> = ({
           {stringNotes.map((_, stringIndex) => (
             <div
               key={stringIndex}
-              className={`flex ${
+              className={`flex relative ${
                 stringIndex < stringNotes.length - 1 ? 'border-b-2 border-gray-900' : ''
               }`}
+              style={{ zIndex: 1 }}
             >
               {renderStringRow(stringNotes.length - 1 - stringIndex)}
             </div>
@@ -101,8 +102,8 @@ export const Fretboard: React.FC<FretboardProps> = ({
       </div>
 
       {/* Mobile Layout (Vertical) */}
-      <div className="md:hidden p-4">
-        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-visible">
+      <div className="md:hidden p-4 pt-8">
+        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-visible mt-4">
           {/* Strings header for mobile */}
           <div className="flex border-b-3 border-gray-900 bg-gradient-to-r from-gray-700 to-gray-800">
             <div className="w-12 h-10 flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold border-r-2 border-gray-900 shadow-lg text-xs">
@@ -146,7 +147,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
                 return (
                   <div
                     key={`${stringIndex}-${fret}`}
-                    className={`flex-1 h-12 mobile-fret-cell overflow-visible ${
+                    className={`flex-1 h-12 mobile-fret-cell overflow-visible relative ${
                       index < stringNotes.length - 1 ? 'border-r border-gray-400' : ''
                     }`}
                   >

@@ -452,6 +452,13 @@
         flex: 1;
         min-height: 48px;
         border-right: 1px solid #cbd5e1;
+        position: relative;
+        overflow: visible;
+        z-index: 10;
+    }
+
+    .mobile-fret-cell:has([class*="annotation"]) {
+        z-index: 40;
     }
 
     .mobile-fret-cell:last-child {
@@ -473,6 +480,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .fretboard-container {
+        padding-top: 2rem;
     }
 }
 
@@ -785,6 +796,17 @@
         min-height: 2.5rem !important;
         width: 100% !important;
         height: 100% !important;
+        overflow: visible !important;
+        position: relative;
+        z-index: 10;
+    }
+
+    .mobile-fret-cell .fret-cell:has([class*="annotation"]) {
+        z-index: 50 !important;
+    }
+
+    .mobile-fret-cell .fret-cell [class*="absolute"] {
+        z-index: 100 !important;
     }
 
     .note-variants {
@@ -827,6 +849,8 @@
 
     .fretboard-container {
         padding: 1rem;
+        padding-top: 2rem;
+        overflow: visible;
     }
 
     .history-panel {

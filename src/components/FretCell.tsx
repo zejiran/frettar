@@ -34,14 +34,15 @@ export const FretCell: React.FC<FretCellProps> = ({
       className={`
         relative w-11 h-15 flex items-center justify-center
         cursor-pointer transition-all duration-300 hover:bg-gray-50
-        hover:scale-110 group shadow-sm hover:shadow-md overflow-visible
+        hover:scale-105 group shadow-sm hover:shadow-md overflow-visible
         ${!isLastFret ? 'border-r border-gray-400' : ''}
         ${isSelected ? 'rounded-full border-3 border-gray-900 ring-2 ring-blue-500' : ''}
       `}
       style={{
         backgroundColor: isSelected ? color : defaultBackgroundColor,
         boxShadow: isSelected ? `0 0 0 2px ${color}30, 0 4px 8px rgba(0,0,0,0.1)` : undefined,
-        transform: isSelected ? 'scale(0.95)' : undefined,
+        transform: isSelected ? 'scale(0.98)' : undefined,
+        zIndex: annotation ? 50 : 10,
       }}
       onClick={handleClick}
       onContextMenu={handleRightClick}
@@ -57,7 +58,7 @@ export const FretCell: React.FC<FretCellProps> = ({
 
 
       {annotation && (
-        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-2 py-1 shadow-lg z-30 border border-gray-200 whitespace-nowrap min-w-max">
+        <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-full text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-2 py-1 shadow-lg z-50 border border-gray-200 whitespace-nowrap min-w-max pointer-events-none">
           {annotation}
         </div>
       )}
@@ -65,7 +66,7 @@ export const FretCell: React.FC<FretCellProps> = ({
 
       {!isSelected && (
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-all duration-300 transform group-hover:scale-95"
+          className="absolute inset-1 opacity-0 group-hover:opacity-30 transition-all duration-300"
           style={{
             backgroundColor: currentColor,
             borderRadius: '50%',
@@ -76,17 +77,17 @@ export const FretCell: React.FC<FretCellProps> = ({
 
 
       {!isSelected && (fret === 3 || fret === 5 || fret === 7 || fret === 9 || fret === 15 || fret === 17 || fret === 19 || fret === 21) && string === 2 && (
-        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
 
       {!isSelected && fret === 12 && (string === 1 || string === 4) && (
-        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
 
       {!isSelected && fret === 24 && (string === 1 || string === 4) && (
-        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
     </div>
