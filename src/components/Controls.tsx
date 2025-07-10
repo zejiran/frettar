@@ -132,14 +132,24 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
           <div className="flex flex-col items-center gap-3 w-full md:w-auto">
             <label className="text-sm font-bold text-gray-700">Quick Actions</label>
             <div className="flex gap-3 w-full md:w-auto justify-center">
-              <button
-                onClick={onCopyToClipboard}
-                className="flex items-center gap-1 md:gap-2 px-4 py-2 md:py-3 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-xl hover:from-teal-700 hover:to-teal-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
-                title="Copy to Clipboard"
-              >
-                <Copy className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="md:hidden">Copy</span>
-              </button>
+              {onCopyToClipboard ? (
+                <button
+                  onClick={onCopyToClipboard}
+                  className="flex items-center gap-1 md:gap-2 px-4 py-2 md:py-3 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-xl hover:from-teal-700 hover:to-teal-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
+                  title="Copy to Clipboard (Requires HTTPS)"
+                >
+                  <Copy className="w-4 h-4 md:w-5 md:h-5" />
+                  <span className="md:hidden">Copy</span>
+                </button>
+              ) : (
+                <div
+                  className="flex items-center gap-1 md:gap-2 px-4 py-2 md:py-3 bg-gray-400 text-gray-300 rounded-xl text-sm md:text-base cursor-not-allowed"
+                  title="Copy to clipboard not available (requires HTTPS and modern browser)"
+                >
+                  <Copy className="w-4 h-4 md:w-5 md:h-5" />
+                  <span className="md:hidden">Copy</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
