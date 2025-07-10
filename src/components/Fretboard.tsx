@@ -77,7 +77,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
     <>
       {/* Desktop/Tablet Layout (Horizontal) */}
       <div className="hidden md:flex justify-center overflow-x-auto p-6 pt-8">
-        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-visible inline-block mt-4">
+        <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-hidden inline-block mt-4">
           {/* Fret numbers header */}
           <div className="flex border-b-3 border-gray-900 bg-gradient-to-r from-gray-700 to-gray-800">
             <div className="w-15 h-10 flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold border-r-2 border-gray-900 shadow-lg">
@@ -147,7 +147,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
                 return (
                   <div
                     key={`${stringIndex}-${fret}`}
-                    className={`flex-1 h-12 mobile-fret-cell overflow-visible relative ${
+                    className={`flex-1 h-12 mobile-fret-cell relative ${
                       index < stringNotes.length - 1 ? 'border-r border-gray-400' : ''
                     }`}
                   >
