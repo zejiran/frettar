@@ -48,7 +48,7 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
             type="text"
             value={title}
             onChange={(e) => onTitleChange?.(e.target.value)}
-            placeholder="Enter a title for your fretboard (appears on export)"
+            placeholder="Enter a title for your fretboard"
             className="w-full max-w-96 px-4 py-2 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-medium text-gray-700"
             maxLength={50}
           />
