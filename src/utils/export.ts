@@ -118,7 +118,9 @@ export const exportService: ExportService = {
           isSelected: htmlCell.style.backgroundColor &&
                      htmlCell.style.backgroundColor !== 'white' &&
                      htmlCell.style.backgroundColor !== '' &&
-                     htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)'
+                     htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
+                     htmlCell.style.backgroundColor !== '#e9ecef' &&
+                     htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)'
         });
       });
 
@@ -320,7 +322,9 @@ export const exportToCanvas = async (
         isSelected: htmlCell.style.backgroundColor &&
                    htmlCell.style.backgroundColor !== 'white' &&
                    htmlCell.style.backgroundColor !== '' &&
-                   htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)'
+                   htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
+                   htmlCell.style.backgroundColor !== '#e9ecef' &&
+                   htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)'
       });
     });
 

@@ -25,17 +25,21 @@ export const FretCell: React.FC<FretCellProps> = ({
 
   const noteWithVariants = musicTheoryService.getNoteWithBothVariants(string, fret);
 
+  // Special background for octave positions (0, 12, 24)
+  const isOctavePosition = fret === 0 || fret === 12 || fret === 24;
+  const defaultBackgroundColor = isOctavePosition ? '#e9ecef' : 'white';
+
   return (
     <div
       className={`
         relative w-11 h-15 flex items-center justify-center
-        cursor-pointer transition-all duration-300 bg-white hover:bg-gray-50
+        cursor-pointer transition-all duration-300 hover:bg-gray-50
         hover:scale-110 group shadow-sm hover:shadow-md overflow-visible
         ${!isLastFret ? 'border-r border-gray-400' : ''}
         ${isSelected ? 'rounded-full border-3 border-gray-900 ring-2 ring-blue-500' : ''}
       `}
       style={{
-        backgroundColor: isSelected ? color : 'white',
+        backgroundColor: isSelected ? color : defaultBackgroundColor,
         boxShadow: isSelected ? `0 0 0 2px ${color}30, 0 4px 8px rgba(0,0,0,0.1)` : undefined,
         transform: isSelected ? 'scale(0.95)' : undefined,
       }}
