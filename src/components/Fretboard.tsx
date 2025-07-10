@@ -96,7 +96,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
                 stringIndex < stringNotes.length - 1 ? 'border-b-2 border-gray-900' : ''
               }`}
             >
-              {renderStringRow(stringIndex)}
+              {renderStringRow(stringNotes.length - 1 - stringIndex)}
             </div>
           ))}
         </div>
@@ -110,7 +110,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
             <div className="w-12 h-10 flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold border-r-2 border-gray-900 shadow-lg text-xs">
               STR
             </div>
-            {stringNotes.map((note, index) => (
+            {stringNotes.slice().reverse().map((note, index) => (
               <div
                 key={index}
                 className={`flex-1 h-10 flex items-center justify-center bg-gradient-to-r from-gray-700 to-gray-800 text-white font-bold text-sm shadow-lg ${
@@ -136,7 +136,8 @@ export const Fretboard: React.FC<FretboardProps> = ({
               </div>
 
               {/* Fret cells for each string */}
-              {stringNotes.map((_, stringIndex) => {
+              {stringNotes.map((_, index) => {
+                const stringIndex = stringNotes.length - 1 - index;
                 const note = musicTheoryService.getNote(stringIndex, fret);
                 const cellKey = getCellKey(stringIndex, fret);
                 const cellState = fretboardState[cellKey];
@@ -148,7 +149,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
                   <div
                     key={`${stringIndex}-${fret}`}
                     className={`flex-1 h-12 mobile-fret-cell ${
-                      stringIndex < stringNotes.length - 1 ? 'border-r border-gray-400' : ''
+                      index < stringNotes.length - 1 ? 'border-r border-gray-400' : ''
                     }`}
                   >
                     <FretCell
