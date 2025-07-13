@@ -38,7 +38,7 @@ export const musicTheoryService: MusicTheoryService = {
     const flatNote = NOTE_SEQUENCE_FLATS[noteIndex];
 
     if (sharpNote !== flatNote) {
-      return `${sharpNote}/${flatNote}`;
+      return `${sharpNote}\n${flatNote}`;
     }
 
     return sharpNote;

@@ -52,7 +52,9 @@ export const FretCell: React.FC<FretCellProps> = ({
 
       <div className={`font-bold select-none transition-colors duration-200 text-center ${
         isSelected ? 'text-gray-900' : 'text-gray-600'
-      } ${noteWithVariants.includes('/') ? 'note-variants' : 'text-xs md:text-xs sm:text-2xs'}`}>
+      } ${noteWithVariants.includes('\n') ? 'note-variants' : 'text-xs md:text-xs sm:text-2xs'}`}
+      style={{ whiteSpace: 'pre-line' }}
+     >
         {noteWithVariants}
       </div>
 
