@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles and custom CSS */
 @layer base {
     body {
         font-family:
@@ -109,12 +108,9 @@
         @apply scale-105;
     }
 
-    /* Desktop fret cells maintain fixed size */
-    @media (min-width: 768px) {
-        .fret-cell {
-            width: 2.75rem !important;
-            height: 3.75rem !important;
-        }
+    .fret-cell {
+        width: 2.75rem !important;
+        height: 3.75rem !important;
     }
 
     .fret-cell.selected {
@@ -442,36 +438,6 @@
         line-height: 1rem;
     }
 
-    /* Responsive fretboard utilities */
-    .mobile-fret-row {
-        display: flex;
-        border-bottom: 1px solid #1f2937;
-    }
-
-    .mobile-fret-cell {
-        flex: 1;
-        min-height: 48px;
-        border-right: 1px solid #cbd5e1;
-        position: relative;
-        overflow: visible;
-        z-index: 10;
-    }
-
-    .mobile-fret-cell:has([class*="annotation"]) {
-        z-index: 40;
-    }
-
-    .mobile-fret-cell:last-child {
-        border-right: none;
-    }
-
-    .mobile-string-header {
-        background: linear-gradient(135deg, #475569 0%, #334155 100%);
-        color: white;
-        font-weight: bold;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    }
-
     .w-fit {
         width: fit-content;
     }
@@ -776,112 +742,6 @@
 
     .text-white {
         color: white !important;
-    }
-}
-
-/* Mobile optimizations */
-@media (max-width: 767px) {
-    .toolbar {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .toolbar-group {
-        width: 100%;
-    }
-
-    /* Mobile-specific fret sizing only */
-    .mobile-fret-cell .fret-cell {
-        min-width: 2rem !important;
-        min-height: 2.5rem !important;
-        width: 100% !important;
-        height: 100% !important;
-        overflow: visible !important;
-        position: relative;
-        z-index: 10;
-    }
-
-    .mobile-fret-cell .fret-cell:has([class*="annotation"]) {
-        z-index: 50 !important;
-    }
-
-    .mobile-fret-cell .fret-cell [class*="absolute"] {
-        z-index: 100 !important;
-    }
-
-    .note-variants {
-        font-size: 8px !important;
-        line-height: 1 !important;
-    }
-
-    .fret-number {
-        width: 3rem !important;
-        height: 3rem !important;
-        font-size: 0.75rem !important;
-    }
-
-    .string-label {
-        width: 3rem !important;
-        height: 3rem !important;
-        font-size: 0.875rem !important;
-    }
-
-    .fretboard {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: auto !important;
-    }
-
-    /* Mobile-only overrides */
-    .toolbar {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .toolbar-group {
-        width: 100%;
-    }
-
-    /* Mobile vertical fretboard layout - only for mobile view */
-    .controls-panel {
-        padding: 1rem;
-    }
-
-    .fretboard-container {
-        padding: 1rem;
-        padding-top: 2rem;
-        overflow: visible;
-    }
-
-    .history-panel {
-        padding: 1rem;
-    }
-
-    .config-card {
-        padding: 1rem;
-    }
-
-    .modal-content {
-        margin: 1rem;
-        max-width: none;
-    }
-
-    /* Mobile-specific responsive utilities */
-    .text-2xs {
-        font-size: 0.6rem;
-        line-height: 0.8rem;
-    }
-
-    /* Touch-friendly sizing */
-    .fret-cell:hover {
-        transform: scale(1.05);
-    }
-
-    /* Ensure annotations are visible on mobile */
-    .annotation-text {
-        font-size: 0.6rem !important;
-        padding: 1px 2px !important;
-        min-height: 12px !important;
     }
 }
 
