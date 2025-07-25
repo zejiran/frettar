@@ -159,25 +159,29 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
         </div>
 
         {/* Instructions */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-3 md:p-4 text-center">
-          <p className="text-gray-700 font-medium text-sm md:text-base">
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-lg text-xs md:text-sm font-semibold mr-1 md:mr-2">
-              Click
-            </span>
-            to select/deselect frets
-            <span className="mx-1 md:mx-2 hidden md:inline">•</span>
-            <br className="md:hidden" />
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-800 rounded-lg text-xs md:text-sm font-semibold mx-1 md:mx-2">
-              Right-click
-            </span>
-            to add annotations
-            <span className="mx-1 md:mx-2 hidden md:inline">•</span>
-            <br className="md:hidden" />
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded-lg text-xs md:text-sm font-semibold ml-1 md:ml-2">
-              Colors
-            </span>
-            to categorize your markings
-          </p>
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl px-3 py-2 md:p-4 text-center">
+          <div className="text-gray-700 font-medium text-sm md:text-base">
+            <div className="py-1 md:py-0 md:inline">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-lg text-xs md:text-sm font-semibold mx-1 md:mx-2">
+                Click
+              </span>
+              to select/deselect frets
+              <span className="mx-1 md:mx-2 hidden md:inline">•</span>
+            </div>
+            <div className="py-1 md:py-0 md:inline">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-800 rounded-lg text-xs md:text-sm font-semibold mx-1 md:mx-2">
+                Right-click
+              </span>
+              to add annotations
+              <span className="mx-1 md:mx-2 hidden md:inline">•</span>
+            </div>
+            <div className="py-1 md:py-0 md:inline">
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded-lg text-xs md:text-sm font-semibold mx-1 md:mx-2">
+                Colors
+              </span>
+              to categorize your markings
+            </div>
+          </div>
         </div>
       </div>
     </div>
