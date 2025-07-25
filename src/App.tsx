@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { FretboardState, SavedConfiguration, FretPosition } from '@/types';
 import { Fretboard } from '@/components/Fretboard';
 import { Controls } from '@/components/Controls';
@@ -6,8 +6,7 @@ import { SaveModal } from '@/components/SaveModal';
 import { AnnotationModal } from '@/components/AnnotationModal';
 import { HistoryPanel } from '@/components/HistoryPanel';
 import { localStorageService } from '@/utils/localStorage';
-import { exportService, copyToClipboard, checkClipboardSupport } from '@/utils/export';
-import { logClipboardDiagnostics } from '@/utils/clipboardTest';
+import { exportService } from '@/utils/export';
 import { Guitar } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -21,14 +20,8 @@ export const App: React.FC = () => {
   const [isAnnotationModalOpen, setIsAnnotationModalOpen] = useState(false);
   const [currentAnnotationCell, setCurrentAnnotationCell] = useState<FretPosition | null>(null);
   const [title, setTitle] = useState<string>('');
-  const [isClipboardSupported, setIsClipboardSupported] = useState<boolean>(false);
 
   const fretboardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const clipboardCheck = checkClipboardSupport();
-    setIsClipboardSupported(clipboardCheck.supported);
-  }, []);
 
   const getCellKey = (string: number, fret: number): string => {
     return `${string}-${fret}`;
@@ -104,20 +97,6 @@ export const App: React.FC = () => {
       alert('Failed to export image. Please try again.');
     }
   }, [title]);
-
-  const handleCopyToClipboard = useCallback(async () => {
-    try {
-      await copyToClipboard(fretboardRef, {}, title);
-      alert('✅ Fretboard copied to clipboard successfully!');
-    } catch (error) {
-      console.error('Copy failed:', error);
-      await logClipboardDiagnostics();
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      alert(`❌ Clipboard Error: ${errorMessage}\n\n💡 Alternative: Use the "Export" button to download the image instead.\n\n🔍 Check browser console for detailed diagnostics.`);
-    }
-  }, [title]);
-
-
 
   const handleToggleHistory = useCallback(() => {
     setIsHistoryOpen(prev => !prev);
@@ -225,8 +204,6 @@ export const App: React.FC = () => {
           onClear={handleClear}
           onExport={handleExport}
           onToggleHistory={handleToggleHistory}
-          onCopyToClipboard={isClipboardSupported ? handleCopyToClipboard : undefined}
-
           title={title}
           onTitleChange={handleTitleChange}
         />

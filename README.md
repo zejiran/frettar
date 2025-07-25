@@ -36,7 +36,6 @@ This fretboard map maker allows you to export your layout creations as images to
 
 ### 📸 Export Options
 - **PNG image export** - download your fretboard as an image with custom titles
-- **Copy to clipboard** functionality
 - **Custom titles** - add titles that appear on exported images
 
 ### 📚 Educational Features

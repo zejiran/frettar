@@ -56,7 +56,6 @@ export interface ControlsProps {
   onClear: () => void;
   onExport: () => void;
   onToggleHistory: () => void;
-  onCopyToClipboard?: () => void;
   title?: string;
   onTitleChange?: (title: string) => void;
 }

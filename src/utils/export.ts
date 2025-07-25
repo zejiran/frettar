@@ -1,41 +1,6 @@
 import html2canvas from 'html2canvas';
 import { ExportService, ExportOptions } from '@/types';
 
-export const checkClipboardSupport = (): {
-  supported: boolean;
-  reason?: string;
-} => {
-  if (!navigator.clipboard) {
-    return {
-      supported: false,
-      reason: 'Clipboard API not available in this browser'
-    };
-  }
-
-  if (typeof navigator.clipboard.write !== 'function') {
-    return {
-      supported: false,
-      reason: 'Clipboard write functionality not available'
-    };
-  }
-
-  if (!window.isSecureContext) {
-    return {
-      supported: false,
-      reason: 'Clipboard access requires HTTPS or localhost'
-    };
-  }
-
-  if (!window.ClipboardItem) {
-    return {
-      supported: false,
-      reason: 'ClipboardItem not supported in this browser'
-    };
-  }
-
-  return { supported: true };
-};
-
 const DEFAULT_EXPORT_OPTIONS: ExportOptions = {
   format: 'png',
   quality: 1.0,
@@ -409,71 +374,6 @@ export const exportToBlob = async (
       );
     }
   });
-};
-
-export const copyToClipboard = async (
-  fretboardRef: React.RefObject<HTMLDivElement>,
-  options: Partial<ExportOptions> = {},
-  title?: string
-): Promise<void> => {
-  const clipboardCheck = checkClipboardSupport();
-  if (!clipboardCheck.supported) {
-    throw new Error(clipboardCheck.reason || 'Clipboard not supported');
-  }
-
-  try {
-    try {
-      const permission = await navigator.permissions.query({ name: 'clipboard-write' as PermissionName });
-      if (permission.state === 'denied') {
-        throw new Error('Clipboard access denied. Please allow clipboard permissions in your browser settings.');
-      }
-    } catch (permissionError) {
-      console.warn('Could not check clipboard permissions:', permissionError);
-    }
-
-    const blob = await exportToBlob(fretboardRef, options, title);
-
-    if (!blob || blob.size === 0) {
-      throw new Error('Failed to generate image for clipboard');
-    }
-
-    const maxSize = 20 * 1024 * 1024; // 20MB
-    if (blob.size > maxSize) {
-      throw new Error('Image too large for clipboard. Try reducing the scale or fretboard size.');
-    }
-
-    const clipboardItem = new ClipboardItem({
-      [blob.type]: blob
-    });
-
-    const writePromise = navigator.clipboard.write([clipboardItem]);
-    const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Clipboard operation timed out')), 10000)
-    );
-
-    await Promise.race([writePromise, timeoutPromise]);
-
-  } catch (error) {
-    console.error('Copy to clipboard failed:', error);
-
-    if (error instanceof Error) {
-      if (error.name === 'NotAllowedError') {
-        throw new Error('Clipboard access denied. Please allow clipboard permissions and try again.');
-      } else if (error.name === 'SecurityError') {
-        throw new Error('Security error: Please access the site via HTTPS to use clipboard features.');
-      } else if (error.name === 'TypeError' && error.message.includes('ClipboardItem')) {
-        throw new Error('Browser does not support copying images to clipboard. Please update your browser.');
-      } else if (error.message.includes('timeout')) {
-        throw new Error('Clipboard operation timed out. Please try again.');
-      } else if (error.message.includes('too large')) {
-        throw error; // Re-throw size error as-is
-      } else if (error.message.includes('not supported') || error.message.includes('requires')) {
-        throw error; // Re-throw compatibility errors as-is
-      }
-    }
-
-    throw new Error('Failed to copy fretboard to clipboard. Please try again or use the export button instead.');
-  }
 };
 
 export const getImageDataUrl = async (
