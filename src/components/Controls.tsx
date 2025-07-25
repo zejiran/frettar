@@ -93,35 +93,39 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
             <label className="text-sm font-bold text-gray-700">Main Actions</label>
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-3 w-full md:w-auto">
               <button
-                onClick={onSave}
-                className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
-              >
-                <Save className="w-4 h-4 md:w-5 md:h-5" />
-                Save
-              </button>
-
-              <button
                 onClick={onClear}
                 className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
+                title="Clear all fret selections and annotations"
               >
                 <Trash2 className="w-4 h-4 md:w-5 md:h-5" />
                 Clear
               </button>
 
               <button
-                onClick={onExport}
-                className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
-              >
-                <Download className="w-4 h-4 md:w-5 md:h-5" />
-                Export
-              </button>
-
-              <button
                 onClick={onToggleHistory}
                 className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl hover:from-purple-700 hover:to-purple-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
+                title="View and load previously saved configurations"
               >
                 <History className="w-4 h-4 md:w-5 md:h-5" />
                 History
+              </button>
+
+              <button
+                onClick={onSave}
+                className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
+                title="Save current fretboard configuration for future usage"
+              >
+                <Save className="w-4 h-4 md:w-5 md:h-5" />
+                Save
+              </button>
+
+              <button
+                onClick={onExport}
+                className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-xl hover:from-green-700 hover:to-green-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
+                title="Download fretboard as PNG image"
+              >
+                <Download className="w-4 h-4 md:w-5 md:h-5" />
+                Export
               </button>
             </div>
           </div>
