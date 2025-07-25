@@ -22,6 +22,14 @@ This fretboard map maker allows you to export your layout creations as images to
 - **Visual note names** displayed on each fret
 - **Fret markers** at traditional positions (3rd, 5th, 7th, 9th, 12th, etc.)
 
+### 🔊 Audio Playback
+- **Real-time note playback** - hear guitar notes when clicking frets
+- **Adjustable note duration** - control how long notes play (0.5s - 5s)
+- **Volume control** - adjust playback volume with slider
+- **Play all notes** - play all selected frets simultaneously as a chord
+- **Web Audio API** - realistic guitar-like sound synthesis
+- **Browser compatible** - works across modern browsers
+
 ### 🎨 Customization
 - **Color picker** with predefined color palette
 - **Custom color selection** for different marking categories
@@ -45,6 +53,8 @@ This fretboard map maker allows you to export your layout creations as images to
 - **Music theory** - show intervals, note relationships with both sharp/flat notation
 - **Practice aids** - create custom exercises and patterns
 - **Enharmonic equivalents** - displays both sharp and flat names (e.g., C#/Db)
+- **Audio learning** - combine visual and auditory learning for better retention
+- **Interactive exercises** - students can hear what they're marking on the fretboard
 
 ## 📝 License
 

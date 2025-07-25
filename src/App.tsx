@@ -1,13 +1,14 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { FretboardState, SavedConfiguration, FretPosition } from '@/types';
-import { Fretboard } from '@/components/Fretboard';
-import { Controls } from '@/components/Controls';
-import { SaveModal } from '@/components/SaveModal';
 import { AnnotationModal } from '@/components/AnnotationModal';
+import { Controls } from '@/components/Controls';
+import { Fretboard } from '@/components/Fretboard';
 import { HistoryPanel } from '@/components/HistoryPanel';
-import { localStorageService } from '@/utils/localStorage';
+import { SaveModal } from '@/components/SaveModal';
+import { FretboardState, FretPosition, SavedConfiguration } from '@/types';
+import { audioService } from '@/utils/audioService';
 import { exportService } from '@/utils/export';
+import { localStorageService } from '@/utils/localStorage';
 import { Guitar } from 'lucide-react';
+import React, { useCallback, useRef, useState } from 'react';
 
 export const App: React.FC = () => {
   const [fretboardState, setFretboardState] = useState<FretboardState>({});
@@ -20,6 +21,9 @@ export const App: React.FC = () => {
   const [isAnnotationModalOpen, setIsAnnotationModalOpen] = useState(false);
   const [currentAnnotationCell, setCurrentAnnotationCell] = useState<FretPosition | null>(null);
   const [title, setTitle] = useState<string>('');
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
+  const [audioVolume, setAudioVolume] = useState(0.3);
+  const [noteDuration, setNoteDuration] = useState(1.5);
 
   const fretboardRef = useRef<HTMLDivElement>(null);
 
@@ -27,8 +31,11 @@ export const App: React.FC = () => {
     return `${string}-${fret}`;
   };
 
-  const handleCellClick = useCallback((string: number, fret: number) => {
+  const handleCellClick = useCallback(async (string: number, fret: number) => {
     const key = getCellKey(string, fret);
+
+    const isCurrentlySelected = !!fretboardState[key];
+    const isSelecting = !isCurrentlySelected;
 
     setFretboardState(prev => {
       const newState = { ...prev };
@@ -44,7 +51,15 @@ export const App: React.FC = () => {
 
       return newState;
     });
-  }, [currentColor]);
+
+    if (isAudioEnabled && isSelecting) {
+      try {
+        await audioService.playNote(string, fret, noteDuration);
+      } catch (error) {
+        console.warn('Failed to play note:', error);
+      }
+    }
+  }, [currentColor, isAudioEnabled, noteDuration, fretboardState]);
 
   const handleCellRightClick = useCallback((string: number, fret: number) => {
     const key = getCellKey(string, fret);
@@ -165,6 +180,38 @@ export const App: React.FC = () => {
     setTitle(newTitle);
   }, []);
 
+  const handleToggleAudio = useCallback(() => {
+    setIsAudioEnabled(prev => !prev);
+  }, []);
+
+  const handleVolumeChange = useCallback((volume: number) => {
+    setAudioVolume(volume);
+    audioService.setVolume(volume);
+  }, []);
+
+  const handleStopAudio = useCallback(() => {
+    audioService.stop();
+  }, []);
+
+  const handleDurationChange = useCallback((duration: number) => {
+    setNoteDuration(duration);
+  }, []);
+
+  const handlePlayAllNotes = useCallback(async () => {
+    if (!isAudioEnabled || Object.keys(fretboardState).length === 0) return;
+
+    try {
+      const notes = Object.keys(fretboardState).map(key => {
+        const [string, fret] = key.split('-').map(Number);
+        return { string, fret };
+      });
+
+      await audioService.playChord(notes, noteDuration + 1);
+    } catch (error) {
+      console.error('Failed to play all notes:', error);
+    }
+  }, [isAudioEnabled, fretboardState, noteDuration]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="container mx-auto">
@@ -206,6 +253,16 @@ export const App: React.FC = () => {
           onToggleHistory={handleToggleHistory}
           title={title}
           onTitleChange={handleTitleChange}
+          isAudioEnabled={isAudioEnabled}
+          audioVolume={audioVolume}
+          onToggleAudio={handleToggleAudio}
+          onVolumeChange={handleVolumeChange}
+          onStopAudio={handleStopAudio}
+          onPlayAll={handlePlayAllNotes}
+          hasSelectedNotes={Object.keys(fretboardState).length > 0}
+          selectedNotesCount={Object.keys(fretboardState).length}
+          noteDuration={noteDuration}
+          onDurationChange={handleDurationChange}
         />
 
         {/* Fretboard */}

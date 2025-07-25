@@ -74,7 +74,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
   };
 
   return (
-    <div className="flex justify-center overflow-x-auto p-6 pt-8">
+    <div className="flex justify-center overflow-x-auto p-6 pt-8 pb-20">
       <div className="border-3 border-gray-900 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 shadow-2xl overflow-hidden inline-block mt-4 min-w-[900px]">
         {/* Fret numbers header */}
         <div className="flex border-b-3 border-gray-900 bg-gradient-to-r from-gray-700 to-gray-800">

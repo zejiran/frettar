@@ -58,6 +58,16 @@ export interface ControlsProps {
   onToggleHistory: () => void;
   title?: string;
   onTitleChange?: (title: string) => void;
+  isAudioEnabled: boolean;
+  audioVolume: number;
+  onToggleAudio: () => void;
+  onVolumeChange: (volume: number) => void;
+  onStopAudio: () => void;
+  onPlayAll: () => void;
+  hasSelectedNotes: boolean;
+  selectedNotesCount: number;
+  noteDuration: number;
+  onDurationChange: (duration: number) => void;
 }
 
 export interface SaveModalProps {
@@ -123,6 +133,40 @@ export interface AppState {
   currentAnnotationCell: FretPosition | null;
   theme: Theme;
   title: string;
+}
+
+export interface AudioSettings {
+  volume: number;
+  sustainTime: number;
+  attackTime: number;
+  releaseTime: number;
+  waveType: OscillatorType;
+  enableReverb: boolean;
+  reverbAmount: number;
+}
+
+export interface AudioServiceInterface {
+  playNote: (stringIndex: number, fretNumber: number, duration?: number) => Promise<void>;
+  playFrequency: (frequency: number, duration?: number) => Promise<void>;
+  playChord: (notes: Array<{ string: number; fret: number }>, duration?: number) => Promise<void>;
+  setVolume: (volume: number) => void;
+  updateSettings: (settings: Partial<AudioSettings>) => void;
+  getSettings: () => AudioSettings;
+  isSupported: () => boolean;
+  stop: () => void;
+}
+
+export interface AudioControlsProps {
+  isAudioEnabled: boolean;
+  volume: number;
+  onToggleAudio: () => void;
+  onVolumeChange: (volume: number) => void;
+  onStopAll: () => void;
+  onPlayAll: () => void;
+  hasSelectedNotes: boolean;
+  selectedNotesCount: number;
+  noteDuration: number;
+  onDurationChange: (duration: number) => void;
 }
 
 export interface AppContextType extends AppState {

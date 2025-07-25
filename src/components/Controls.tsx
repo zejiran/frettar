@@ -1,6 +1,7 @@
 import React from 'react';
 import { ControlsProps } from '@/types';
 import { Palette, Save, Trash2, Download, History, Sparkles } from 'lucide-react';
+import { AudioControls } from './AudioControls';
 
 interface ExtendedControlsProps extends ControlsProps {
   title?: string;
@@ -16,6 +17,16 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
   onToggleHistory,
   title = '',
   onTitleChange,
+  isAudioEnabled,
+  audioVolume,
+  onToggleAudio,
+  onVolumeChange,
+  onStopAudio,
+  onPlayAll,
+  hasSelectedNotes,
+  selectedNotesCount,
+  noteDuration,
+  onDurationChange,
 }) => {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onColorChange(e.target.value);
@@ -129,6 +140,22 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
               </button>
             </div>
           </div>
+        </div>
+
+        {/* Audio Controls */}
+        <div className="mb-4 md:mb-6">
+          <AudioControls
+            isAudioEnabled={isAudioEnabled}
+            volume={audioVolume}
+            onToggleAudio={onToggleAudio}
+            onVolumeChange={onVolumeChange}
+            onStopAll={onStopAudio}
+            onPlayAll={onPlayAll}
+            hasSelectedNotes={hasSelectedNotes}
+            selectedNotesCount={selectedNotesCount}
+            noteDuration={noteDuration}
+            onDurationChange={onDurationChange}
+          />
         </div>
 
         {/* Instructions */}
