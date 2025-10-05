@@ -8,8 +8,9 @@ export const Fretboard: React.FC<FretboardProps> = ({
   currentColor,
   onCellClick,
   onCellRightClick,
+  tuningStrings,
 }) => {
-  const stringNotes = musicTheoryService.getStringNotes();
+  const stringNotes = tuningStrings;
   const numberOfFrets = 24;
 
   const getCellKey = (string: number, fret: number): string => {
@@ -46,7 +47,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
     );
 
     for (let fret = 0; fret <= numberOfFrets; fret++) {
-      const note = musicTheoryService.getNote(stringIndex, fret);
+      const note = musicTheoryService.getNote(stringIndex, fret, false, stringNotes);
       const cellKey = getCellKey(stringIndex, fret);
       const cellState = fretboardState[cellKey];
       const isSelected = !!cellState;
@@ -66,6 +67,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
           onCellClick={onCellClick}
           onCellRightClick={onCellRightClick}
           isLastFret={fret === numberOfFrets}
+          tuningStrings={stringNotes}
         />
       );
     }

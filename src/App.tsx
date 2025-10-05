@@ -3,12 +3,15 @@ import { Controls } from '@/components/Controls';
 import { Fretboard } from '@/components/Fretboard';
 import { HistoryPanel } from '@/components/HistoryPanel';
 import { SaveModal } from '@/components/SaveModal';
-import { FretboardState, FretPosition, SavedConfiguration } from '@/types';
+import { TuningControls } from '@/components/TuningControls';
+import { FretboardState, FretPosition, SavedConfiguration, TuningConfig } from '@/types';
 import { audioService } from '@/utils/audioService';
 import { exportService } from '@/utils/export';
 import { localStorageService } from '@/utils/localStorage';
+import { musicTheoryService } from '@/utils/musicTheory';
+import { DEFAULT_TUNING } from '@/utils/tuningPresets';
 import { Guitar } from 'lucide-react';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 export const App: React.FC = () => {
   const [fretboardState, setFretboardState] = useState<FretboardState>({});
@@ -24,8 +27,13 @@ export const App: React.FC = () => {
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const [audioVolume, setAudioVolume] = useState(0.3);
   const [noteDuration, setNoteDuration] = useState(1.5);
+  const [currentTuning, setCurrentTuning] = useState<TuningConfig>(DEFAULT_TUNING);
 
   const fretboardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    musicTheoryService.setCustomTuning(currentTuning.strings);
+  }, [currentTuning]);
 
   const getCellKey = (string: number, fret: number): string => {
     return `${string}-${fret}`;
@@ -212,6 +220,43 @@ export const App: React.FC = () => {
     }
   }, [isAudioEnabled, fretboardState, noteDuration]);
 
+  const handleTuningChange = useCallback((tuning: TuningConfig) => {
+    setCurrentTuning(tuning);
+    // Clear fretboard when tuning changes to avoid confusion
+    setFretboardState({});
+  }, []);
+
+  const handleStringCountChange = useCallback((count: number) => {
+    const newStrings = [...currentTuning.strings];
+
+    if (count > newStrings.length) {
+      // Add strings (use E for new strings)
+      while (newStrings.length < count) {
+        newStrings.push('E');
+      }
+    } else if (count < newStrings.length) {
+      // Remove strings from the end
+      newStrings.splice(count);
+    }
+
+    setCurrentTuning({
+      name: 'Custom',
+      strings: newStrings
+    });
+    // Clear fretboard when string count changes
+    setFretboardState({});
+  }, [currentTuning]);
+
+  const handleIndividualStringChange = useCallback((stringIndex: number, note: string) => {
+    const newStrings = [...currentTuning.strings];
+    newStrings[stringIndex] = note;
+
+    setCurrentTuning({
+      name: 'Custom',
+      strings: newStrings
+    });
+  }, [currentTuning]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="container mx-auto">
@@ -265,6 +310,14 @@ export const App: React.FC = () => {
           onDurationChange={handleDurationChange}
         />
 
+        {/* Tuning Controls */}
+        <TuningControls
+          currentTuning={currentTuning}
+          onTuningChange={handleTuningChange}
+          onStringCountChange={handleStringCountChange}
+          onIndividualStringChange={handleIndividualStringChange}
+        />
+
         {/* Fretboard */}
         <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl p-8 mb-8 border border-gray-200">
           <div ref={fretboardRef} className="w-full">
@@ -273,6 +326,7 @@ export const App: React.FC = () => {
               currentColor={currentColor}
               onCellClick={handleCellClick}
               onCellRightClick={handleCellRightClick}
+              tuningStrings={currentTuning.strings}
             />
           </div>
         </div>

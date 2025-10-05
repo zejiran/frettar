@@ -12,6 +12,7 @@ export const FretCell: React.FC<FretCellProps> = ({
   onCellClick,
   onCellRightClick,
   isLastFret = false,
+  tuningStrings,
 }) => {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export const FretCell: React.FC<FretCellProps> = ({
     onCellRightClick(string, fret);
   };
 
-  const noteWithVariants = musicTheoryService.getNoteWithBothVariants(string, fret);
+  const noteWithVariants = musicTheoryService.getNoteWithBothVariants(string, fret, tuningStrings);
 
   // Special background for octave positions (0, 12, 24)
   const isOctavePosition = fret === 0 || fret === 12 || fret === 24;

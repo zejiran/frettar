@@ -48,7 +48,7 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
   ];
 
   return (
-    <div className="bg-gradient-to-r from-white to-gray-50 border-b-2 border-gray-200 p-4 md:p-6 shadow-lg">
+    <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl p-6 mb-4 border border-gray-200">
       <div className="max-w-6xl mx-auto">
         {/* Title Input */}
         <div className="flex flex-col items-center gap-3 mb-4 md:mb-6">

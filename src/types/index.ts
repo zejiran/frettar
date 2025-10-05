@@ -40,6 +40,7 @@ export interface FretCellProps {
   onCellClick: (string: number, fret: number) => void;
   onCellRightClick: (string: number, fret: number) => void;
   isLastFret?: boolean;
+  tuningStrings: string[];
 }
 
 export interface FretboardProps {
@@ -47,6 +48,7 @@ export interface FretboardProps {
   currentColor: string;
   onCellClick: (string: number, fret: number) => void;
   onCellRightClick: (string: number, fret: number) => void;
+  tuningStrings: string[];
 }
 
 export interface ControlsProps {
@@ -105,12 +107,14 @@ export interface LocalStorageService {
 }
 
 export interface MusicTheoryService {
-  getNote: (stringIndex: number, fretNumber: number, useFlats?: boolean) => string;
-  getNoteWithBothVariants: (stringIndex: number, fretNumber: number) => string;
+  getNote: (stringIndex: number, fretNumber: number, useFlats?: boolean, customStrings?: string[]) => string;
+  getNoteWithBothVariants: (stringIndex: number, fretNumber: number, customStrings?: string[]) => string;
   getNoteSequence: () => string[];
   getNoteSequenceFlats: () => string[];
   getStringNotes: () => string[];
   getStringStartingNotes: () => number[];
+  setCustomTuning: (strings: string[]) => void;
+  getCurrentTuning: () => string[];
 }
 
 export interface ExportService {
@@ -167,6 +171,18 @@ export interface AudioControlsProps {
   selectedNotesCount: number;
   noteDuration: number;
   onDurationChange: (duration: number) => void;
+}
+
+export interface TuningConfig {
+  strings: string[]; // Array of note names for each string (from lowest to highest)
+  name: string; // Display name (e.g., "E Standard", "Drop D")
+}
+
+export interface TuningControlsProps {
+  currentTuning: TuningConfig;
+  onTuningChange: (tuning: TuningConfig) => void;
+  onStringCountChange: (count: number) => void;
+  onIndividualStringChange: (stringIndex: number, note: string) => void;
 }
 
 export interface AppContextType extends AppState {
