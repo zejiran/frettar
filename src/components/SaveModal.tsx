@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SaveModalProps } from '@/types';
 import { X, Save } from 'lucide-react';
 
-export const SaveModal: React.FC<SaveModalProps> = ({
-  isOpen,
-  onSave,
-  onClose,
-}) => {
+export const SaveModal: React.FC<SaveModalProps> = ({ isOpen, onSave, onClose }) => {
   const [configName, setConfigName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -49,10 +45,7 @@ export const SaveModal: React.FC<SaveModalProps> = ({
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md animate-scale-in">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-800">Save Configuration</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -66,7 +59,7 @@ export const SaveModal: React.FC<SaveModalProps> = ({
               id="configName"
               type="text"
               value={configName}
-              onChange={(e) => setConfigName(e.target.value)}
+              onChange={e => setConfigName(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Enter a name for your configuration"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -74,9 +67,7 @@ export const SaveModal: React.FC<SaveModalProps> = ({
               autoFocus
               disabled={isSubmitting}
             />
-            <p className="mt-1 text-sm text-gray-500">
-              {configName.length}/50 characters
-            </p>
+            <p className="mt-1 text-sm text-gray-500">{configName.length}/50 characters</p>
           </div>
 
           <div className="flex justify-end gap-3">

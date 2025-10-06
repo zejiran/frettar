@@ -55,17 +55,15 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 max="1"
                 step="0.05"
                 value={volume}
-                onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+                onChange={e => onVolumeChange(parseFloat(e.target.value))}
                 className="w-24 h-2 bg-gray-200 rounded-lg cursor-pointer volume-slider"
                 title={`Volume: ${Math.round(volume * 100)}%`}
                 style={{
-                  background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${volume * 100}%, #e5e7eb ${volume * 100}%, #e5e7eb 100%)`
+                  background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${volume * 100}%, #e5e7eb ${volume * 100}%, #e5e7eb 100%)`,
                 }}
               />
               <Volume2 className="w-4 h-4 text-gray-600" />
-              <span className="text-xs text-gray-500 min-w-[3ch]">
-                {Math.round(volume * 100)}%
-              </span>
+              <span className="text-xs text-gray-500 min-w-[3ch]">{Math.round(volume * 100)}%</span>
             </div>
           </div>
 
@@ -80,11 +78,11 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
                 max="5"
                 step="0.1"
                 value={noteDuration}
-                onChange={(e) => onDurationChange(parseFloat(e.target.value))}
+                onChange={e => onDurationChange(parseFloat(e.target.value))}
                 className="w-24 h-2 bg-gray-200 rounded-lg cursor-pointer duration-slider"
                 title={`Note duration: ${noteDuration}s`}
                 style={{
-                  background: `linear-gradient(to right, #10b981 0%, #10b981 ${((noteDuration - 0.5) / 4.5) * 100}%, #e5e7eb ${((noteDuration - 0.5) / 4.5) * 100}%, #e5e7eb 100%)`
+                  background: `linear-gradient(to right, #10b981 0%, #10b981 ${((noteDuration - 0.5) / 4.5) * 100}%, #e5e7eb ${((noteDuration - 0.5) / 4.5) * 100}%, #e5e7eb 100%)`,
                 }}
               />
               <span className="text-xs text-gray-600 font-medium min-w-[3.5ch]">

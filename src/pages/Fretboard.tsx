@@ -38,44 +38,50 @@ export const Fretboard: React.FC = () => {
     return `${string}-${fret}`;
   };
 
-  const handleCellClick = useCallback(async (string: number, fret: number) => {
-    const key = getCellKey(string, fret);
+  const handleCellClick = useCallback(
+    async (string: number, fret: number) => {
+      const key = getCellKey(string, fret);
 
-    const isCurrentlySelected = !!fretboardState[key];
-    const isSelecting = !isCurrentlySelected;
+      const isCurrentlySelected = !!fretboardState[key];
+      const isSelecting = !isCurrentlySelected;
 
-    setFretboardState(prev => {
-      const newState = { ...prev };
+      setFretboardState(prev => {
+        const newState = { ...prev };
 
-      if (newState[key]) {
-        delete newState[key];
-      } else {
-        newState[key] = {
-          color: currentColor,
-          annotation: ''
-        };
+        if (newState[key]) {
+          delete newState[key];
+        } else {
+          newState[key] = {
+            color: currentColor,
+            annotation: '',
+          };
+        }
+
+        return newState;
+      });
+
+      if (isAudioEnabled && isSelecting) {
+        try {
+          await audioService.playNote(string, fret, noteDuration);
+        } catch (error) {
+          console.warn('Failed to play note:', error);
+        }
       }
+    },
+    [currentColor, isAudioEnabled, noteDuration, fretboardState]
+  );
 
-      return newState;
-    });
+  const handleCellRightClick = useCallback(
+    (string: number, fret: number) => {
+      const key = getCellKey(string, fret);
 
-    if (isAudioEnabled && isSelecting) {
-      try {
-        await audioService.playNote(string, fret, noteDuration);
-      } catch (error) {
-        console.warn('Failed to play note:', error);
+      if (fretboardState[key]) {
+        setCurrentAnnotationCell({ string, fret });
+        setIsAnnotationModalOpen(true);
       }
-    }
-  }, [currentColor, isAudioEnabled, noteDuration, fretboardState]);
-
-  const handleCellRightClick = useCallback((string: number, fret: number) => {
-    const key = getCellKey(string, fret);
-
-    if (fretboardState[key]) {
-      setCurrentAnnotationCell({ string, fret });
-      setIsAnnotationModalOpen(true);
-    }
-  }, [fretboardState]);
+    },
+    [fretboardState]
+  );
 
   const handleColorChange = useCallback((color: string) => {
     setCurrentColor(color);
@@ -85,23 +91,26 @@ export const Fretboard: React.FC = () => {
     setIsSaveModalOpen(true);
   }, []);
 
-  const handleSaveConfiguration = useCallback((name: string) => {
-    const config: SavedConfiguration = {
-      id: Date.now(),
-      name,
-      state: JSON.parse(JSON.stringify(fretboardState)),
-      date: new Date().toISOString()
-    };
+  const handleSaveConfiguration = useCallback(
+    (name: string) => {
+      const config: SavedConfiguration = {
+        id: Date.now(),
+        name,
+        state: JSON.parse(JSON.stringify(fretboardState)),
+        date: new Date().toISOString(),
+      };
 
-    try {
-      localStorageService.saveConfiguration(config);
-      setSavedConfigurations(localStorageService.getConfigurations());
-      setIsSaveModalOpen(false);
-    } catch (error) {
-      console.error('Failed to save configuration:', error);
-      alert('Failed to save configuration. Please try again.');
-    }
-  }, [fretboardState]);
+      try {
+        localStorageService.saveConfiguration(config);
+        setSavedConfigurations(localStorageService.getConfigurations());
+        setIsSaveModalOpen(false);
+      } catch (error) {
+        console.error('Failed to save configuration:', error);
+        alert('Failed to save configuration. Please try again.');
+      }
+    },
+    [fretboardState]
+  );
 
   const handleClear = useCallback(() => {
     if (Object.keys(fretboardState).length > 0) {
@@ -124,13 +133,16 @@ export const Fretboard: React.FC = () => {
     setIsHistoryOpen(prev => !prev);
   }, []);
 
-  const handleLoadConfiguration = useCallback((id: number) => {
-    const config = savedConfigurations.find(c => c.id === id);
-    if (config) {
-      setFretboardState(JSON.parse(JSON.stringify(config.state)));
-      setIsHistoryOpen(false);
-    }
-  }, [savedConfigurations]);
+  const handleLoadConfiguration = useCallback(
+    (id: number) => {
+      const config = savedConfigurations.find(c => c.id === id);
+      if (config) {
+        setFretboardState(JSON.parse(JSON.stringify(config.state)));
+        setIsHistoryOpen(false);
+      }
+    },
+    [savedConfigurations]
+  );
 
   const handleDeleteConfiguration = useCallback((id: number) => {
     try {
@@ -155,25 +167,28 @@ export const Fretboard: React.FC = () => {
     }
   }, []);
 
-  const handleSaveAnnotation = useCallback((annotation: string) => {
-    if (currentAnnotationCell) {
-      const key = getCellKey(currentAnnotationCell.string, currentAnnotationCell.fret);
+  const handleSaveAnnotation = useCallback(
+    (annotation: string) => {
+      if (currentAnnotationCell) {
+        const key = getCellKey(currentAnnotationCell.string, currentAnnotationCell.fret);
 
-      setFretboardState(prev => {
-        const newState = { ...prev };
-        if (newState[key]) {
-          newState[key] = {
-            ...newState[key],
-            annotation
-          };
-        }
-        return newState;
-      });
+        setFretboardState(prev => {
+          const newState = { ...prev };
+          if (newState[key]) {
+            newState[key] = {
+              ...newState[key],
+              annotation,
+            };
+          }
+          return newState;
+        });
 
-      setCurrentAnnotationCell(null);
-      setIsAnnotationModalOpen(false);
-    }
-  }, [currentAnnotationCell]);
+        setCurrentAnnotationCell(null);
+        setIsAnnotationModalOpen(false);
+      }
+    },
+    [currentAnnotationCell]
+  );
 
   const getCurrentAnnotation = (): string => {
     if (currentAnnotationCell) {
@@ -227,36 +242,42 @@ export const Fretboard: React.FC = () => {
     setFretboardState({});
   }, []);
 
-  const handleStringCountChange = useCallback((count: number) => {
-    const newStrings = [...currentTuning.strings];
+  const handleStringCountChange = useCallback(
+    (count: number) => {
+      const newStrings = [...currentTuning.strings];
 
-    if (count > newStrings.length) {
-      // Add strings (use E for new strings)
-      while (newStrings.length < count) {
-        newStrings.push('E');
+      if (count > newStrings.length) {
+        // Add strings (use E for new strings)
+        while (newStrings.length < count) {
+          newStrings.push('E');
+        }
+      } else if (count < newStrings.length) {
+        // Remove strings from the end
+        newStrings.splice(count);
       }
-    } else if (count < newStrings.length) {
-      // Remove strings from the end
-      newStrings.splice(count);
-    }
 
-    setCurrentTuning({
-      name: 'Custom',
-      strings: newStrings
-    });
-    // Clear fretboard when string count changes
-    setFretboardState({});
-  }, [currentTuning]);
+      setCurrentTuning({
+        name: 'Custom',
+        strings: newStrings,
+      });
+      // Clear fretboard when string count changes
+      setFretboardState({});
+    },
+    [currentTuning]
+  );
 
-  const handleIndividualStringChange = useCallback((stringIndex: number, note: string) => {
-    const newStrings = [...currentTuning.strings];
-    newStrings[stringIndex] = note;
+  const handleIndividualStringChange = useCallback(
+    (stringIndex: number, note: string) => {
+      const newStrings = [...currentTuning.strings];
+      newStrings[stringIndex] = note;
 
-    setCurrentTuning({
-      name: 'Custom',
-      strings: newStrings
-    });
-  }, [currentTuning]);
+      setCurrentTuning({
+        name: 'Custom',
+        strings: newStrings,
+      });
+    },
+    [currentTuning]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">

@@ -8,7 +8,12 @@ const DEFAULT_EXPORT_OPTIONS: ExportOptions = {
 };
 
 const createFilename = (title?: string, format: string = 'png'): string => {
-  const sanitizedTitle = title ? title.trim().replace(/[^a-zA-Z0-9\-_\s]/g, '').replace(/\s+/g, '-') : '';
+  const sanitizedTitle = title
+    ? title
+        .trim()
+        .replace(/[^a-zA-Z0-9\-_\s]/g, '')
+        .replace(/\s+/g, '-')
+    : '';
   const dateStr = new Date().toISOString().split('T')[0];
 
   return sanitizedTitle
@@ -80,12 +85,13 @@ export const exportService: ExportService = {
           borderRadius: computedStyle.borderRadius,
           width: computedStyle.width,
           height: computedStyle.height,
-          isSelected: htmlCell.style.backgroundColor &&
-                     htmlCell.style.backgroundColor !== 'white' &&
-                     htmlCell.style.backgroundColor !== '' &&
-                     htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
-                     htmlCell.style.backgroundColor !== '#e9ecef' &&
-                     htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)'
+          isSelected:
+            htmlCell.style.backgroundColor &&
+            htmlCell.style.backgroundColor !== 'white' &&
+            htmlCell.style.backgroundColor !== '' &&
+            htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
+            htmlCell.style.backgroundColor !== '#e9ecef' &&
+            htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)',
         });
       });
 
@@ -288,12 +294,13 @@ export const exportToCanvas = async (
       const key = `${htmlCell.dataset.string}-${htmlCell.dataset.fret}`;
       cellStyles.set(key, {
         borderRadius: computedStyle.borderRadius,
-        isSelected: htmlCell.style.backgroundColor &&
-                   htmlCell.style.backgroundColor !== 'white' &&
-                   htmlCell.style.backgroundColor !== '' &&
-                   htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
-                   htmlCell.style.backgroundColor !== '#e9ecef' &&
-                   htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)'
+        isSelected:
+          htmlCell.style.backgroundColor &&
+          htmlCell.style.backgroundColor !== 'white' &&
+          htmlCell.style.backgroundColor !== '' &&
+          htmlCell.style.backgroundColor !== 'rgb(255, 255, 255)' &&
+          htmlCell.style.backgroundColor !== '#e9ecef' &&
+          htmlCell.style.backgroundColor !== 'rgb(233, 236, 239)',
       });
     });
 
@@ -351,7 +358,7 @@ export const exportToBlob = async (
   return new Promise((resolve, reject) => {
     if (finalOptions.format === 'jpg') {
       canvas.toBlob(
-        (blob) => {
+        blob => {
           if (blob) {
             resolve(blob);
           } else {
@@ -362,16 +369,13 @@ export const exportToBlob = async (
         finalOptions.quality
       );
     } else {
-      canvas.toBlob(
-        (blob) => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            reject(new Error('Failed to create blob'));
-          }
-        },
-        'image/png'
-      );
+      canvas.toBlob(blob => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error('Failed to create blob'));
+        }
+      }, 'image/png');
     }
   });
 };

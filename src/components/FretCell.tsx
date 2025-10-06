@@ -50,15 +50,14 @@ export const FretCell: React.FC<FretCellProps> = ({
       data-string={string}
       data-fret={fret}
     >
-
-      <div className={`font-bold select-none transition-colors duration-200 text-center ${
-        isSelected ? 'text-gray-900' : 'text-gray-600'
-      } ${noteWithVariants.includes('\n') ? 'note-variants' : 'text-xs md:text-xs sm:text-2xs'}`}
-      style={{ whiteSpace: 'pre-line' }}
-     >
+      <div
+        className={`font-bold select-none transition-colors duration-200 text-center ${
+          isSelected ? 'text-gray-900' : 'text-gray-600'
+        } ${noteWithVariants.includes('\n') ? 'note-variants' : 'text-xs md:text-xs sm:text-2xs'}`}
+        style={{ whiteSpace: 'pre-line' }}
+      >
         {noteWithVariants}
       </div>
-
 
       {annotation && (
         <div className="absolute top-3 left-1/2 transform -translate-x-1/2 -translate-y-full text-xs md:text-xs sm:text-2xs font-bold text-gray-900 bg-white bg-opacity-95 rounded px-2 py-1 shadow-lg z-50 border border-gray-200 whitespace-nowrap min-w-max pointer-events-none">
@@ -66,33 +65,37 @@ export const FretCell: React.FC<FretCellProps> = ({
         </div>
       )}
 
-
       {!isSelected && (
         <div
           className="absolute inset-1 opacity-0 group-hover:opacity-30 transition-all duration-300"
           style={{
             backgroundColor: currentColor,
             borderRadius: '50%',
-            border: '1px solid rgba(255,255,255,0.6)'
+            border: '1px solid rgba(255,255,255,0.6)',
           }}
         />
       )}
 
-
-      {!isSelected && (fret === 3 || fret === 5 || fret === 7 || fret === 9 || fret === 15 || fret === 17 || fret === 19 || fret === 21) && string === 2 && (
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
-      )}
-
+      {!isSelected &&
+        (fret === 3 ||
+          fret === 5 ||
+          fret === 7 ||
+          fret === 9 ||
+          fret === 15 ||
+          fret === 17 ||
+          fret === 19 ||
+          fret === 21) &&
+        string === 2 && (
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
+        )}
 
       {!isSelected && fret === 12 && (string === 1 || string === 4) && (
         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
 
-
       {!isSelected && fret === 24 && (string === 1 || string === 4) && (
         <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60 shadow-sm" />
       )}
-
     </div>
   );
 };

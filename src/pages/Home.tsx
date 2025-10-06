@@ -17,8 +17,8 @@ export const Home: React.FC = () => {
             Welcome to Frettar
           </h1>
           <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed">
-            The modern, interactive web application for marking guitar fret positions,
-            designed specifically for guitar classes and music education.
+            The modern, interactive web application for marking guitar fret positions, designed
+            specifically for guitar classes and music education.
           </p>
           <div className="flex justify-center gap-4 mb-8">
             <Link
@@ -44,8 +44,8 @@ export const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Interactive Fretboard</h3>
             <p className="text-gray-600 leading-relaxed">
-              24-fret guitar fretboard with standard tuning. Click to select/deselect any fret position
-              with visual note names and fret markers at traditional positions.
+              24-fret guitar fretboard with standard tuning. Click to select/deselect any fret
+              position with visual note names and fret markers at traditional positions.
             </p>
           </div>
 
@@ -55,8 +55,8 @@ export const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Audio Playback</h3>
             <p className="text-gray-600 leading-relaxed">
-              Real-time note playback with adjustable duration and volume. Play individual notes
-              or all selected frets as a chord with realistic guitar-like synthesis.
+              Real-time note playback with adjustable duration and volume. Play individual notes or
+              all selected frets as a chord with realistic guitar-like synthesis.
             </p>
           </div>
 
@@ -77,8 +77,8 @@ export const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Save & Load System</h3>
             <p className="text-gray-600 leading-relaxed">
-              Local storage with named configurations. Search and filter saved setups,
-              export/import as JSON files, and manage multiple fretboard configurations.
+              Local storage with named configurations. Search and filter saved setups, export/import
+              as JSON files, and manage multiple fretboard configurations.
             </p>
           </div>
 
@@ -88,8 +88,8 @@ export const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Export Options</h3>
             <p className="text-gray-600 leading-relaxed">
-              Download your fretboard as PNG images with custom titles. Perfect for sharing
-              chord diagrams, scale patterns, and educational materials.
+              Download your fretboard as PNG images with custom titles. Perfect for sharing chord
+              diagrams, scale patterns, and educational materials.
             </p>
           </div>
 
@@ -99,8 +99,8 @@ export const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Educational Focus</h3>
             <p className="text-gray-600 leading-relaxed">
-              Perfect for guitar classes and music education. Create chord diagrams, visualize
-              scale patterns, show intervals, and combine visual and auditory learning.
+              Perfect for guitar classes and music education. Create chord diagrams, visualize scale
+              patterns, show intervals, and combine visual and auditory learning.
             </p>
           </div>
         </div>
@@ -116,7 +116,9 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">Guitar Teachers</h3>
-                  <p className="text-gray-600">Create visual aids for lessons, chord charts, and scale diagrams</p>
+                  <p className="text-gray-600">
+                    Create visual aids for lessons, chord charts, and scale diagrams
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -125,7 +127,9 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">Music Students</h3>
-                  <p className="text-gray-600">Practice scale patterns, chord progressions, and music theory</p>
+                  <p className="text-gray-600">
+                    Practice scale patterns, chord progressions, and music theory
+                  </p>
                 </div>
               </div>
             </div>
@@ -136,7 +140,9 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">Musicians</h3>
-                  <p className="text-gray-600">Document song arrangements, share chord progressions, and collaborate</p>
+                  <p className="text-gray-600">
+                    Document song arrangements, share chord progressions, and collaborate
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -145,7 +151,9 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">Content Creators</h3>
-                  <p className="text-gray-600">Generate high-quality fretboard diagrams for tutorials and courses</p>
+                  <p className="text-gray-600">
+                    Generate high-quality fretboard diagrams for tutorials and courses
+                  </p>
                 </div>
               </div>
             </div>
@@ -157,7 +165,8 @@ export const Home: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 shadow-2xl">
             <h2 className="text-4xl font-bold text-white mb-6">Ready to Start Creating?</h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Join thousands of guitar teachers and students who use Frettar to enhance their music education experience.
+              Join thousands of guitar teachers and students who use Frettar to enhance their music
+              education experience.
             </p>
             <Link
               to="/"

@@ -17,12 +17,14 @@ This fretboard map maker allows you to export your layout creations as images to
 ## ✨ Features
 
 ### 🎯 Interactive Fretboard
+
 - **24-fret guitar fretboard** with standard tuning (E-A-D-G-B-E)
 - **Click to select/deselect** any fret position
 - **Visual note names** displayed on each fret
 - **Fret markers** at traditional positions (3rd, 5th, 7th, 9th, 12th, etc.)
 
 ### 🔊 Audio Playback
+
 - **Real-time note playback** - hear guitar notes when clicking frets
 - **Adjustable note duration** - control how long notes play (0.5s - 5s)
 - **Volume control** - adjust playback volume with slider
@@ -31,11 +33,13 @@ This fretboard map maker allows you to export your layout creations as images to
 - **Browser compatible** - works across modern browsers
 
 ### 🎨 Customization
+
 - **Color picker** with predefined color palette
 - **Custom color selection** for different marking categories
 - **Text annotations** - right-click any selected fret to add notes
 
 ### 💾 Save & Load System
+
 - **Local storage** - all data saved in your browser
 - **Named configurations** - save multiple fretboard setups
 - **Search and filter** saved configurations
@@ -43,10 +47,12 @@ This fretboard map maker allows you to export your layout creations as images to
 - **Delete management** with confirmation prompts
 
 ### 📸 Export Options
+
 - **PNG image export** - download your fretboard as an image with custom titles
 - **Custom titles** - add titles that appear on exported images
 
 ### 📚 Educational Features
+
 - **Perfect for guitar classes** and music education
 - **Chord diagrams** - mark chord positions and fingerings
 - **Scale patterns** - visualize scale shapes across the fretboard

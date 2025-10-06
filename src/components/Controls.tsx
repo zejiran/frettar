@@ -56,7 +56,7 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
           <input
             type="text"
             value={title}
-            onChange={(e) => onTitleChange?.(e.target.value)}
+            onChange={e => onTitleChange?.(e.target.value)}
             placeholder="Enter a title for your fretboard"
             className="w-full max-w-96 px-4 py-2 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-medium text-gray-700"
             maxLength={50}
@@ -89,7 +89,9 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
                     key={color}
                     onClick={() => onColorChange(color)}
                     className={`w-7 h-7 md:w-8 md:h-8 rounded-lg border-2 hover:scale-110 transition-all duration-200 shadow-sm hover:shadow-md ${
-                      currentColor === color ? 'border-gray-800 ring-2 ring-blue-500' : 'border-gray-300'
+                      currentColor === color
+                        ? 'border-gray-800 ring-2 ring-blue-500'
+                        : 'border-gray-300'
                     }`}
                     style={{ backgroundColor: color }}
                     title={name}

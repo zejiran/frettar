@@ -34,9 +34,10 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
 
     if (currentIndex === -1) return;
 
-    const newIndex = direction === 'up'
-      ? (currentIndex + 1) % NOTE_SEQUENCE.length
-      : (currentIndex - 1 + NOTE_SEQUENCE.length) % NOTE_SEQUENCE.length;
+    const newIndex =
+      direction === 'up'
+        ? (currentIndex + 1) % NOTE_SEQUENCE.length
+        : (currentIndex - 1 + NOTE_SEQUENCE.length) % NOTE_SEQUENCE.length;
 
     const newNote = NOTE_SEQUENCE[newIndex];
     if (newNote) {
@@ -63,17 +64,13 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
         <div className="mt-4 space-y-4">
           {/* Tuning Preset Selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tuning Preset
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Tuning Preset</label>
             <select
               value={currentTuning.name}
               onChange={handlePresetChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
             >
-              {currentTuning.name === 'Custom' && (
-                <option value="Custom">Custom</option>
-              )}
+              {currentTuning.name === 'Custom' && <option value="Custom">Custom</option>}
               {TUNING_PRESETS.map(preset => (
                 <option key={preset.name} value={preset.name}>
                   {preset.name}
@@ -147,7 +144,8 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
               Current Tuning: <span className="font-bold">{currentTuning.name}</span>
             </p>
             <p className="text-sm text-blue-700 mt-1">
-              {[...currentTuning.strings].reverse().join(' - ')} ({currentTuning.strings.length} strings) - High to Low
+              {[...currentTuning.strings].reverse().join(' - ')} ({currentTuning.strings.length}{' '}
+              strings) - High to Low
             </p>
           </div>
         </div>

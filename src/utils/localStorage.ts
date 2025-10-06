@@ -61,7 +61,7 @@ export const localStorageService: LocalStorageService = {
       console.error('Error clearing localStorage:', error);
       throw new Error('Failed to clear configurations');
     }
-  }
+  },
 };
 
 export const getStorageSize = (): number => {
@@ -106,7 +106,7 @@ export const importConfigurationsFromFile = (file: File): Promise<SavedConfigura
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = event => {
       try {
         const result = event.target?.result;
         if (typeof result !== 'string') {
@@ -121,20 +121,22 @@ export const importConfigurationsFromFile = (file: File): Promise<SavedConfigura
           return;
         }
 
-        const validConfigurations = parsed.filter((config: unknown): config is SavedConfiguration => {
-          return (
-            typeof config === 'object' &&
-            config !== null &&
-            'id' in config &&
-            'name' in config &&
-            'state' in config &&
-            'date' in config &&
-            typeof (config as SavedConfiguration).id === 'number' &&
-            typeof (config as SavedConfiguration).name === 'string' &&
-            typeof (config as SavedConfiguration).state === 'object' &&
-            typeof (config as SavedConfiguration).date === 'string'
-          );
-        });
+        const validConfigurations = parsed.filter(
+          (config: unknown): config is SavedConfiguration => {
+            return (
+              typeof config === 'object' &&
+              config !== null &&
+              'id' in config &&
+              'name' in config &&
+              'state' in config &&
+              'date' in config &&
+              typeof (config as SavedConfiguration).id === 'number' &&
+              typeof (config as SavedConfiguration).name === 'string' &&
+              typeof (config as SavedConfiguration).state === 'object' &&
+              typeof (config as SavedConfiguration).date === 'string'
+            );
+          }
+        );
 
         resolve(validConfigurations);
       } catch (error) {
@@ -153,17 +155,20 @@ export const importConfigurationsFromFile = (file: File): Promise<SavedConfigura
 export const getStorageQuota = (): Promise<{ used: number; total: number }> => {
   return new Promise((resolve, reject) => {
     if ('storage' in navigator && 'estimate' in navigator.storage) {
-      navigator.storage.estimate().then(estimate => {
-        resolve({
-          used: estimate.usage || 0,
-          total: estimate.quota || 0
-        });
-      }).catch(reject);
+      navigator.storage
+        .estimate()
+        .then(estimate => {
+          resolve({
+            used: estimate.usage || 0,
+            total: estimate.quota || 0,
+          });
+        })
+        .catch(reject);
     } else {
       const used = getStorageSize();
       resolve({
         used,
-        total: 5 * 1024 * 1024 // Assume 5MB limit
+        total: 5 * 1024 * 1024, // Assume 5MB limit
       });
     }
   });

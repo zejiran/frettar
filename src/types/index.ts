@@ -107,8 +107,17 @@ export interface LocalStorageService {
 }
 
 export interface MusicTheoryService {
-  getNote: (stringIndex: number, fretNumber: number, useFlats?: boolean, customStrings?: string[]) => string;
-  getNoteWithBothVariants: (stringIndex: number, fretNumber: number, customStrings?: string[]) => string;
+  getNote: (
+    stringIndex: number,
+    fretNumber: number,
+    useFlats?: boolean,
+    customStrings?: string[]
+  ) => string;
+  getNoteWithBothVariants: (
+    stringIndex: number,
+    fretNumber: number,
+    customStrings?: string[]
+  ) => string;
   getNoteSequence: () => string[];
   getNoteSequenceFlats: () => string[];
   getStringNotes: () => string[];

@@ -31,7 +31,12 @@ const getStartingNotesFromStrings = (strings: string[]): number[] => {
 };
 
 export const musicTheoryService: MusicTheoryService = {
-  getNote: (stringIndex: number, fretNumber: number, useFlats: boolean = false, customStrings?: string[]): string => {
+  getNote: (
+    stringIndex: number,
+    fretNumber: number,
+    useFlats: boolean = false,
+    customStrings?: string[]
+  ): string => {
     const strings = customStrings || currentTuning;
     const startingNotes = getStartingNotesFromStrings(strings);
 
@@ -47,7 +52,11 @@ export const musicTheoryService: MusicTheoryService = {
     return useFlats ? NOTE_SEQUENCE_FLATS[noteIndex]! : NOTE_SEQUENCE[noteIndex]!;
   },
 
-  getNoteWithBothVariants: (stringIndex: number, fretNumber: number, customStrings?: string[]): string => {
+  getNoteWithBothVariants: (
+    stringIndex: number,
+    fretNumber: number,
+    customStrings?: string[]
+  ): string => {
     const strings = customStrings || currentTuning;
     const startingNotes = getStartingNotesFromStrings(strings);
 
@@ -92,29 +101,33 @@ export const musicTheoryService: MusicTheoryService = {
 
   getCurrentTuning: (): string[] => {
     return [...currentTuning];
-  }
+  },
 };
 
 export const getNoteColor = (note: string): string => {
   const colorMap: Record<string, string> = {
-    'C': '#FF6B6B',
+    C: '#FF6B6B',
     'C#': '#FF8E53',
-    'D': '#FF9F40',
+    D: '#FF9F40',
     'D#': '#FFB347',
-    'E': '#FFC93C',
-    'F': '#BADD62',
+    E: '#FFC93C',
+    F: '#BADD62',
     'F#': '#95D8A3',
-    'G': '#6BCF7F',
+    G: '#6BCF7F',
     'G#': '#4ECDC4',
-    'A': '#45B7D1',
+    A: '#45B7D1',
     'A#': '#6C5CE7',
-    'B': '#A29BFE'
+    B: '#A29BFE',
   };
 
   return colorMap[note] || '#E0E0E0';
 };
 
-export const getFrequency = (stringIndex: number, fretNumber: number, customStrings?: string[]): number => {
+export const getFrequency = (
+  stringIndex: number,
+  fretNumber: number,
+  customStrings?: string[]
+): number => {
   const strings = customStrings || currentTuning;
 
   if (stringIndex < 0 || stringIndex >= strings.length) {
@@ -167,8 +180,10 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
   } else if (strings.length === 4 || strings.length === 5) {
     // Bass guitars: map to the first N strings of standard tuning
     adjustedStringIndex = stringIndex;
-    referenceOctave = stringIndex < referenceOctaves.length ? (referenceOctaves[stringIndex] ?? 2) : 2;
-    referenceNote = stringIndex < referenceNotes.length ? (referenceNotes[stringIndex] ?? 'E') : 'E';
+    referenceOctave =
+      stringIndex < referenceOctaves.length ? (referenceOctaves[stringIndex] ?? 2) : 2;
+    referenceNote =
+      stringIndex < referenceNotes.length ? (referenceNotes[stringIndex] ?? 'E') : 'E';
   } else {
     // Fallback for other string counts
     adjustedStringIndex = stringIndex;
@@ -235,7 +250,7 @@ export const getInterval = (fromNote: string, toNote: string): string => {
     'Minor 6th',
     'Major 6th',
     'Minor 7th',
-    'Major 7th'
+    'Major 7th',
   ];
 
   return intervals[semitones]!;
@@ -252,17 +267,20 @@ export const getEnharmonicEquivalent = (note: string): string => {
     'F#': 'Gb',
     'G#': 'Ab',
     'A#': 'Bb',
-    'Db': 'C#',
-    'Eb': 'D#',
-    'Gb': 'F#',
-    'Ab': 'G#',
-    'Bb': 'A#'
+    Db: 'C#',
+    Eb: 'D#',
+    Gb: 'F#',
+    Ab: 'G#',
+    Bb: 'A#',
   };
 
   return enharmonics[note] || note;
 };
 
-export const getScaleNotes = (rootNote: string, scaleType: 'major' | 'minor' | 'pentatonic'): string[] => {
+export const getScaleNotes = (
+  rootNote: string,
+  scaleType: 'major' | 'minor' | 'pentatonic'
+): string[] => {
   const rootIndex = NOTE_SEQUENCE.indexOf(rootNote);
   if (rootIndex === -1) {
     throw new Error('Invalid root note');
@@ -271,14 +289,17 @@ export const getScaleNotes = (rootNote: string, scaleType: 'major' | 'minor' | '
   const scalePatterns = {
     major: [0, 2, 4, 5, 7, 9, 11],
     minor: [0, 2, 3, 5, 7, 8, 10],
-    pentatonic: [0, 2, 4, 7, 9]
+    pentatonic: [0, 2, 4, 7, 9],
   };
 
   const pattern = scalePatterns[scaleType];
   return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12] ?? 'C');
 };
 
-export const getChordNotes = (rootNote: string, chordType: 'major' | 'minor' | 'dominant7'): string[] => {
+export const getChordNotes = (
+  rootNote: string,
+  chordType: 'major' | 'minor' | 'dominant7'
+): string[] => {
   const rootIndex = NOTE_SEQUENCE.indexOf(rootNote);
   if (rootIndex === -1) {
     throw new Error('Invalid root note');
@@ -287,14 +308,16 @@ export const getChordNotes = (rootNote: string, chordType: 'major' | 'minor' | '
   const chordPatterns = {
     major: [0, 4, 7],
     minor: [0, 3, 7],
-    dominant7: [0, 4, 7, 10]
+    dominant7: [0, 4, 7, 10],
   };
 
   const pattern = chordPatterns[chordType];
   return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12] ?? 'C');
 };
 
-export const getFretboardPositions = (targetNote: string): Array<{ string: number; fret: number }> => {
+export const getFretboardPositions = (
+  targetNote: string
+): Array<{ string: number; fret: number }> => {
   const positions: Array<{ string: number; fret: number }> = [];
 
   for (let stringIndex = 0; stringIndex < STRING_STARTING_NOTES.length; stringIndex++) {

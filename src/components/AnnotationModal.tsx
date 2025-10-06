@@ -52,24 +52,24 @@ export const AnnotationModal: React.FC<AnnotationModalProps> = ({
             <MessageSquare className="w-5 h-5" />
             Add Annotation
           </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
           <div className="mb-4">
-            <label htmlFor="annotationText" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="annotationText"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Annotation Text
             </label>
             <input
               id="annotationText"
               type="text"
               value={annotationText}
-              onChange={(e) => setAnnotationText(e.target.value)}
+              onChange={e => setAnnotationText(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Enter annotation text (e.g., 'Root', 'V', '1st')"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -77,14 +77,13 @@ export const AnnotationModal: React.FC<AnnotationModalProps> = ({
               autoFocus
               disabled={isSubmitting}
             />
-            <p className="mt-1 text-sm text-gray-500">
-              {annotationText.length}/10 characters
-            </p>
+            <p className="mt-1 text-sm text-gray-500">{annotationText.length}/10 characters</p>
           </div>
 
           <div className="mb-4">
             <p className="text-sm text-gray-600">
-              <strong>Tips:</strong> Use short labels like "R" for root, "5" for fifth, or "F1" for finger 1.
+              <strong>Tips:</strong> Use short labels like "R" for root, "5" for fifth, or "F1" for
+              finger 1.
             </p>
           </div>
 

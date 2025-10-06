@@ -16,9 +16,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filteredConfigurations = configurations
-    .filter(config =>
-      config.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    .filter(config => config.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       let comparison = 0;
 
@@ -45,7 +43,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       });
     } catch {
       return dateString;
@@ -55,7 +53,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
   const getConfigurationStats = (config: SavedConfiguration) => {
     const selectedFrets = Object.keys(config.state).length;
     const annotatedFrets = Object.values(config.state).filter(
-      (state) => state.annotation && state.annotation.trim() !== ''
+      state => state.annotation && state.annotation.trim() !== ''
     ).length;
 
     return { selectedFrets, annotatedFrets };
@@ -79,7 +77,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
 
       const newConfigs = importedConfigurations.map(config => ({
         ...config,
-        id: Date.now() + Math.random()
+        id: Date.now() + Math.random(),
       }));
 
       onImport(newConfigs);
@@ -113,7 +111,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                 type="text"
                 placeholder="Search configurations..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64"
               />
             </div>
@@ -122,7 +120,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
             <div className="flex items-center gap-2">
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as 'date' | 'name')}
+                onChange={e => setSortBy(e.target.value as 'date' | 'name')}
                 className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="date">Sort by Date</option>
@@ -156,10 +154,13 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
 
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <div className="text-2xl font-bold text-purple-600">
-              {configurations.reduce((sum, config) =>
-                sum + Object.values(config.state).filter(
-                  (state) => state.annotation && state.annotation.trim() !== ''
-                ).length, 0
+              {configurations.reduce(
+                (sum, config) =>
+                  sum +
+                  Object.values(config.state).filter(
+                    state => state.annotation && state.annotation.trim() !== ''
+                  ).length,
+                0
               )}
             </div>
             <div className="text-sm text-gray-600">Total Annotations</div>
@@ -176,13 +177,12 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
             <p className="text-gray-400">
               {searchTerm
                 ? 'Try adjusting your search terms'
-                : 'Start creating fretboard configurations and save them to see them here'
-              }
+                : 'Start creating fretboard configurations and save them to see them here'}
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredConfigurations.map((config) => {
+            {filteredConfigurations.map(config => {
               const { selectedFrets, annotatedFrets } = getConfigurationStats(config);
 
               return (
@@ -243,12 +243,15 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                       <div className="flex gap-1">
                         <button
                           onClick={() => {
-                            const sanitizedTitle = config.name.trim().replace(/[^a-zA-Z0-9\-_\s]/g, '').replace(/\s+/g, '-');
+                            const sanitizedTitle = config.name
+                              .trim()
+                              .replace(/[^a-zA-Z0-9\-_\s]/g, '')
+                              .replace(/\s+/g, '-');
                             const dateStr = new Date().toISOString().split('T')[0];
                             const filename = `fretboard-config-${sanitizedTitle}-${dateStr}.json`;
 
                             const dataStr = JSON.stringify(config, null, 2);
-                            const dataUri = `data:application/json;charset=utf-8,${  encodeURIComponent(dataStr)}`;
+                            const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
                             const linkElement = document.createElement('a');
                             linkElement.setAttribute('href', dataUri);
                             linkElement.setAttribute('download', filename);
@@ -275,7 +278,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                 const dateStr = new Date().toISOString().split('T')[0];
                 const filename = `frettar-all-configurations-${dateStr}.json`;
                 const dataStr = JSON.stringify(configurations, null, 2);
-                const dataUri = `data:application/json;charset=utf-8,${  encodeURIComponent(dataStr)}`;
+                const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
                 const linkElement = document.createElement('a');
                 linkElement.setAttribute('href', dataUri);
                 linkElement.setAttribute('download', filename);

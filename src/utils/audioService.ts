@@ -42,10 +42,11 @@ class AudioService implements AudioServiceInterface {
     if (this.audioContext) return;
 
     try {
-      const AudioContextClass = window.AudioContext ||
-                               (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
-                               (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
-                               (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext;
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
+        (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
+        (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext;
 
       if (!AudioContextClass) {
         throw new Error('Web Audio API not supported in this browser');
@@ -113,7 +114,11 @@ class AudioService implements AudioServiceInterface {
     this.reverbNode.buffer = impulse;
   }
 
-  private createGuitarOscillator(frequency: number, startTime: number, duration: number): { oscillator: OscillatorNode; gain: GainNode } {
+  private createGuitarOscillator(
+    frequency: number,
+    startTime: number,
+    duration: number
+  ): { oscillator: OscillatorNode; gain: GainNode } {
     if (!this.audioContext || !this.masterGain) {
       throw new Error('Audio context not initialized');
     }
@@ -180,7 +185,11 @@ class AudioService implements AudioServiceInterface {
     return { oscillator, gain };
   }
 
-  public async playNote(stringIndex: number, fretNumber: number, duration: number = 2): Promise<void> {
+  public async playNote(
+    stringIndex: number,
+    fretNumber: number,
+    duration: number = 2
+  ): Promise<void> {
     if (!this.isSupported()) {
       console.warn('Audio not supported in this browser');
       return;
@@ -217,7 +226,10 @@ class AudioService implements AudioServiceInterface {
     }
   }
 
-  public async playChord(notes: Array<{ string: number; fret: number }>, duration: number = 3): Promise<void> {
+  public async playChord(
+    notes: Array<{ string: number; fret: number }>,
+    duration: number = 3
+  ): Promise<void> {
     if (!this.isSupported()) {
       console.warn('Audio not supported in this browser');
       return;
@@ -235,7 +247,7 @@ class AudioService implements AudioServiceInterface {
       // Play all notes simultaneously with slight timing variation for realism
       notes.forEach((note, index) => {
         const frequency = getFrequency(note.string, note.fret);
-        const noteStartTime = startTime + (index * 0.02); // 20ms stagger
+        const noteStartTime = startTime + index * 0.02; // 20ms stagger
         this.createGuitarOscillator(frequency, noteStartTime, duration);
       });
     } catch (error) {
@@ -247,7 +259,10 @@ class AudioService implements AudioServiceInterface {
   public setVolume(volume: number): void {
     this.settings.volume = Math.max(0, Math.min(1, volume));
     if (this.masterGain) {
-      this.masterGain.gain.setValueAtTime(this.settings.volume, this.audioContext?.currentTime || 0);
+      this.masterGain.gain.setValueAtTime(
+        this.settings.volume,
+        this.audioContext?.currentTime || 0
+      );
     }
   }
 
@@ -255,7 +270,10 @@ class AudioService implements AudioServiceInterface {
     this.settings = { ...this.settings, ...newSettings };
 
     if (this.masterGain && newSettings.volume !== undefined) {
-      this.masterGain.gain.setValueAtTime(this.settings.volume, this.audioContext?.currentTime || 0);
+      this.masterGain.gain.setValueAtTime(
+        this.settings.volume,
+        this.audioContext?.currentTime || 0
+      );
     }
   }
 
@@ -264,10 +282,12 @@ class AudioService implements AudioServiceInterface {
   }
 
   public isSupported(): boolean {
-    return !!(window.AudioContext ||
-             (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
-             (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
-             (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext);
+    return !!(
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
+      (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
+      (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext
+    );
   }
 
   public stop(): void {
@@ -296,20 +316,24 @@ class AudioService implements AudioServiceInterface {
 
 export const audioService = new AudioService();
 
-export const playNoteByName = async (noteName: string, octave: number = 4, duration: number = 2): Promise<void> => {
+export const playNoteByName = async (
+  noteName: string,
+  octave: number = 4,
+  duration: number = 2
+): Promise<void> => {
   const noteFrequencies: Record<string, number> = {
-    'C': 261.63,
+    C: 261.63,
     'C#': 277.18,
-    'D': 293.66,
+    D: 293.66,
     'D#': 311.13,
-    'E': 329.63,
-    'F': 349.23,
+    E: 329.63,
+    F: 349.23,
     'F#': 369.99,
-    'G': 392.00,
-    'G#': 415.30,
-    'A': 440.00,
+    G: 392.0,
+    'G#': 415.3,
+    A: 440.0,
     'A#': 466.16,
-    'B': 493.88,
+    B: 493.88,
   };
 
   const baseFrequency = noteFrequencies[noteName];

@@ -22,21 +22,21 @@ export const About: React.FC = () => {
               <h2 className="text-3xl font-bold text-gray-800 mb-6">Meet the Developer</h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p className="text-lg">
-                  ¡Hola! I'm <strong>Juan Alegría</strong>, a software engineer from Colombia who loves to play
-                  electric guitar in my free time. I'm passionate about creating tools that make music
-                  education more accessible and engaging.
+                  ¡Hola! I'm <strong>Juan Alegría</strong>, a software engineer from Colombia who
+                  loves to play electric guitar in my free time. I'm passionate about creating tools
+                  that make music education more accessible and engaging.
                 </p>
                 <p>
-                  As someone who enjoys both coding and music, I built Frettar to bridge the gap between
-                  technology and guitar education. Whether you're a teacher looking to create visual aids
-                  for your classes or a student trying to understand fretboard patterns, this tool is
-                  designed with you in mind.
+                  As someone who enjoys both coding and music, I built Frettar to bridge the gap
+                  between technology and guitar education. Whether you're a teacher looking to
+                  create visual aids for your classes or a student trying to understand fretboard
+                  patterns, this tool is designed with you in mind.
                 </p>
                 <p>
-                  When I'm not writing code or teaching guitar concepts through interactive applications,
-                  you can find me jamming to my favorite tracks or exploring new musical genres.
-                  Music has always been a driving force in my life, inspiring both my creativity and
-                  my approach to problem-solving.
+                  When I'm not writing code or teaching guitar concepts through interactive
+                  applications, you can find me jamming to my favorite tracks or exploring new
+                  musical genres. Music has always been a driving force in my life, inspiring both
+                  my creativity and my approach to problem-solving.
                 </p>
               </div>
 
@@ -96,8 +96,8 @@ export const About: React.FC = () => {
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Built with Modern Technology</h2>
             <p className="text-gray-600">
-              Frettar is crafted using cutting-edge web technologies to provide a smooth,
-              responsive experience across all devices.
+              Frettar is crafted using cutting-edge web technologies to provide a smooth, responsive
+              experience across all devices.
             </p>
           </div>
 
@@ -123,7 +123,9 @@ export const About: React.FC = () => {
                 <Guitar className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Music Theory</h3>
-              <p className="text-gray-600">Advanced algorithms for note calculation and relationships</p>
+              <p className="text-gray-600">
+                Advanced algorithms for note calculation and relationships
+              </p>
             </div>
           </div>
         </div>

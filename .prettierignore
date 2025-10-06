@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Package files
+package-lock.json
+yarn.lock
+
+# Config files that should maintain their format
+.env
+.env.*
+
+# Generated files
+*.log
+*.tgz
+
+# IDE files
+.vscode/
+.idea/
+
+# Git
+.git/
+
+# Other
+coverage/
+*.min.js
+*.min.css
