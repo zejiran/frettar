@@ -18,7 +18,7 @@ export const Fretboard: React.FC = () => {
   const [savedConfigurations, setSavedConfigurations] = useState<SavedConfiguration[]>(
     localStorageService.getConfigurations()
   );
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const [isAnnotationModalOpen, setIsAnnotationModalOpen] = useState(false);
   const [currentAnnotationCell, setCurrentAnnotationCell] = useState<FretPosition | null>(null);
@@ -29,6 +29,7 @@ export const Fretboard: React.FC = () => {
   const [currentTuning, setCurrentTuning] = useState<TuningConfig>(DEFAULT_TUNING);
 
   const fretboardRef = useRef<HTMLDivElement>(null);
+  const historyPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     musicTheoryService.setCustomTuning(currentTuning.strings);
@@ -129,8 +130,11 @@ export const Fretboard: React.FC = () => {
     }
   }, [title]);
 
-  const handleToggleHistory = useCallback(() => {
-    setIsHistoryOpen(prev => !prev);
+  const handleScrollToHistory = useCallback(() => {
+    historyPanelRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }, []);
 
   const handleLoadConfiguration = useCallback(
@@ -138,7 +142,6 @@ export const Fretboard: React.FC = () => {
       const config = savedConfigurations.find(c => c.id === id);
       if (config) {
         setFretboardState(JSON.parse(JSON.stringify(config.state)));
-        setIsHistoryOpen(false);
       }
     },
     [savedConfigurations]
@@ -282,6 +285,14 @@ export const Fretboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       <div className="container mx-auto px-6 py-8">
+        {/* Tuning Controls */}
+        <TuningControls
+          currentTuning={currentTuning}
+          onTuningChange={handleTuningChange}
+          onStringCountChange={handleStringCountChange}
+          onIndividualStringChange={handleIndividualStringChange}
+        />
+
         {/* Controls */}
         <Controls
           currentColor={currentColor}
@@ -289,7 +300,7 @@ export const Fretboard: React.FC = () => {
           onSave={handleSave}
           onClear={handleClear}
           onExport={handleExport}
-          onToggleHistory={handleToggleHistory}
+          onToggleHistory={handleScrollToHistory}
           title={title}
           onTitleChange={handleTitleChange}
           isAudioEnabled={isAudioEnabled}
@@ -302,14 +313,6 @@ export const Fretboard: React.FC = () => {
           selectedNotesCount={Object.keys(fretboardState).length}
           noteDuration={noteDuration}
           onDurationChange={handleDurationChange}
-        />
-
-        {/* Tuning Controls */}
-        <TuningControls
-          currentTuning={currentTuning}
-          onTuningChange={handleTuningChange}
-          onStringCountChange={handleStringCountChange}
-          onIndividualStringChange={handleIndividualStringChange}
         />
 
         {/* Fretboard */}
@@ -326,13 +329,15 @@ export const Fretboard: React.FC = () => {
         </div>
 
         {/* History Panel */}
-        <HistoryPanel
-          isOpen={isHistoryOpen}
-          configurations={savedConfigurations}
-          onLoad={handleLoadConfiguration}
-          onDelete={handleDeleteConfiguration}
-          onImport={handleImportConfigurations}
-        />
+        <div ref={historyPanelRef}>
+          <HistoryPanel
+            isOpen={true}
+            configurations={savedConfigurations}
+            onLoad={handleLoadConfiguration}
+            onDelete={handleDeleteConfiguration}
+            onImport={handleImportConfigurations}
+          />
+        </div>
 
         {/* Modals */}
         <SaveModal
