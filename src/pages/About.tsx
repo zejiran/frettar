@@ -1,4 +1,4 @@
-import { Github, Coffee, Send, Music, Code, Guitar } from 'lucide-react';
+import { Github, Coffee, Send, Music, Guitar } from 'lucide-react';
 import React from 'react';
 
 export const About: React.FC = () => {
@@ -91,45 +91,6 @@ export const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Technology Section */}
-        <div className="bg-white rounded-3xl shadow-2xl p-12 mb-16">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Built with Modern Technology</h2>
-            <p className="text-gray-600">
-              Frettar is crafted using cutting-edge web technologies to provide a smooth, responsive
-              experience across all devices.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Code className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">React & TypeScript</h3>
-              <p className="text-gray-600">Modern frontend framework with type safety</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Music className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Web Audio API</h3>
-              <p className="text-gray-600">Real-time audio synthesis for guitar sounds</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Guitar className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Music Theory</h3>
-              <p className="text-gray-600">
-                Advanced algorithms for note calculation and relationships
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Music Section */}
         <div className="bg-white rounded-3xl shadow-2xl p-12">
           <div className="text-center mb-12">
@@ -185,8 +146,10 @@ export const About: React.FC = () => {
               development and help me stay in the zone while building tools like Frettar.
             </p>
             <div className="flex justify-center">
-              <div className="px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full font-semibold">
-                🎵 Happy listening & coding! 🎸
+              <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-slate-800 to-slate-900 text-white rounded-lg shadow-lg border-l-4 border-yellow-400">
+                <Music className="w-5 h-5 text-white" />
+                <span className="font-medium">Happy listening & coding!</span>
+                <Guitar className="w-5 h-5 text-white" />
               </div>
             </div>
           </div>
