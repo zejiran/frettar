@@ -97,8 +97,8 @@ export const About: React.FC = () => {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Music That Inspires Me</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Here are two playlists that fuel my creativity and keep me motivated while coding.
-              From progressive rock to modern metal, these tracks represent the diverse musical
-              landscape that influences my work.
+              From anime and Japanese music to virtuoso instrumental guitar pieces, these tracks
+              represent the diverse musical landscape that influences my work.
             </p>
           </div>
 
