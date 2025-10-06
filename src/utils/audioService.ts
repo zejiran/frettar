@@ -43,9 +43,9 @@ class AudioService implements AudioServiceInterface {
 
     try {
       const AudioContextClass = window.AudioContext ||
-                               (window as any).webkitAudioContext ||
-                               (window as any).mozAudioContext ||
-                               (window as any).msAudioContext;
+                               (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
+                               (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
+                               (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext;
 
       if (!AudioContextClass) {
         throw new Error('Web Audio API not supported in this browser');
@@ -265,9 +265,9 @@ class AudioService implements AudioServiceInterface {
 
   public isSupported(): boolean {
     return !!(window.AudioContext ||
-             (window as any).webkitAudioContext ||
-             (window as any).mozAudioContext ||
-             (window as any).msAudioContext);
+             (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext ||
+             (window as Window & { mozAudioContext?: typeof AudioContext }).mozAudioContext ||
+             (window as Window & { msAudioContext?: typeof AudioContext }).msAudioContext);
   }
 
   public stop(): void {

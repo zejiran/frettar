@@ -88,7 +88,7 @@ export const isStorageAvailable = (): boolean => {
 export const exportConfigurationsToFile = (configurations: SavedConfiguration[]): void => {
   try {
     const dataStr = JSON.stringify(configurations, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
 
     const exportFileDefaultName = `frettar-configurations-${new Date().toISOString().split('T')[0]}.json`;
 

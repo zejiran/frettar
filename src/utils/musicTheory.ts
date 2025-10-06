@@ -181,7 +181,7 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
   const currentNoteIndex = getNoteIndex(strings[stringIndex]);
 
   // Calculate semitone difference (accounting for wraparound)
-  let semitoneDiff = currentNoteIndex - referenceNoteIndex;
+  const semitoneDiff = currentNoteIndex - referenceNoteIndex;
 
   // Adjust octave based on semitone difference
   // If we go down more than 6 semitones, we're likely in the previous octave

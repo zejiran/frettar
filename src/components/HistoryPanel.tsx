@@ -52,10 +52,10 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
     }
   };
 
-  const getConfigurationStats = (config: any) => {
+  const getConfigurationStats = (config: SavedConfiguration) => {
     const selectedFrets = Object.keys(config.state).length;
     const annotatedFrets = Object.values(config.state).filter(
-      (state: any) => state.annotation && state.annotation.trim() !== ''
+      (state) => state.annotation && state.annotation.trim() !== ''
     ).length;
 
     return { selectedFrets, annotatedFrets };
@@ -158,7 +158,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
             <div className="text-2xl font-bold text-purple-600">
               {configurations.reduce((sum, config) =>
                 sum + Object.values(config.state).filter(
-                  (state: any) => state.annotation && state.annotation.trim() !== ''
+                  (state) => state.annotation && state.annotation.trim() !== ''
                 ).length, 0
               )}
             </div>
@@ -248,7 +248,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                             const filename = `fretboard-config-${sanitizedTitle}-${dateStr}.json`;
 
                             const dataStr = JSON.stringify(config, null, 2);
-                            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+                            const dataUri = `data:application/json;charset=utf-8,${  encodeURIComponent(dataStr)}`;
                             const linkElement = document.createElement('a');
                             linkElement.setAttribute('href', dataUri);
                             linkElement.setAttribute('download', filename);
@@ -275,7 +275,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
                 const dateStr = new Date().toISOString().split('T')[0];
                 const filename = `frettar-all-configurations-${dateStr}.json`;
                 const dataStr = JSON.stringify(configurations, null, 2);
-                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+                const dataUri = `data:application/json;charset=utf-8,${  encodeURIComponent(dataStr)}`;
                 const linkElement = document.createElement('a');
                 linkElement.setAttribute('href', dataUri);
                 linkElement.setAttribute('download', filename);

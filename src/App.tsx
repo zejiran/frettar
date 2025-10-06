@@ -22,8 +22,8 @@ const AppContent: React.FC = () => {
       <Navigation />
 
       <Routes>
-        <Route path="/" element={<Fretboard />} />
         <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Fretboard />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
