@@ -9,8 +9,8 @@ export const Navigation: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { path: '/', label: 'Fretboard', icon: Guitar },
     { path: '/home', label: 'Home', icon: Home },
+    { path: '/', label: 'Fretboard', icon: Guitar },
     { path: '/about', label: 'About', icon: Info },
   ];
 
