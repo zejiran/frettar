@@ -24,7 +24,6 @@ export const App: React.FC = () => {
 
         <Routes>
           <Route path="/" element={<Fretboard />} />
-          <Route path="/fretboard" element={<Fretboard />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Navigate to="/" replace />} />
