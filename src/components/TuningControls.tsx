@@ -28,6 +28,8 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
 
   const adjustNote = (stringIndex: number, direction: 'up' | 'down') => {
     const currentNote = currentTuning.strings[stringIndex];
+    if (!currentNote) return;
+
     const currentIndex = NOTE_SEQUENCE.indexOf(currentNote);
 
     if (currentIndex === -1) return;
@@ -37,7 +39,9 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
       : (currentIndex - 1 + NOTE_SEQUENCE.length) % NOTE_SEQUENCE.length;
 
     const newNote = NOTE_SEQUENCE[newIndex];
-    onIndividualStringChange(stringIndex, newNote);
+    if (newNote) {
+      onIndividualStringChange(stringIndex, newNote);
+    }
   };
 
   return (

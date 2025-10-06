@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { HistoryPanelProps } from '@/types';
+import { HistoryPanelProps, SavedConfiguration } from '@/types';
 import { History, Play, Trash2, Calendar, Search, Download, Upload } from 'lucide-react';
 import { importConfigurationsFromFile } from '@/utils/localStorage';
 

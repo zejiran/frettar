@@ -209,8 +209,10 @@ export const Fretboard: React.FC = () => {
 
     try {
       const notes = Object.keys(fretboardState).map(key => {
-        const [string, fret] = key.split('-').map(Number);
-        return { string, fret };
+        const [stringStr, fretStr] = key.split('-');
+        const string = Number(stringStr);
+        const fret = Number(fretStr);
+        return { string: string || 0, fret: fret || 0 };
       });
 
       await audioService.playChord(notes, noteDuration + 1);

@@ -43,8 +43,8 @@ export const musicTheoryService: MusicTheoryService = {
       throw new Error(`Invalid fret number: ${fretNumber}`);
     }
 
-    const noteIndex = (startingNotes[stringIndex] + fretNumber) % 12;
-    return useFlats ? NOTE_SEQUENCE_FLATS[noteIndex] : NOTE_SEQUENCE[noteIndex];
+    const noteIndex = (startingNotes[stringIndex]! + fretNumber) % 12;
+    return useFlats ? NOTE_SEQUENCE_FLATS[noteIndex]! : NOTE_SEQUENCE[noteIndex]!;
   },
 
   getNoteWithBothVariants: (stringIndex: number, fretNumber: number, customStrings?: string[]): string => {
@@ -59,7 +59,7 @@ export const musicTheoryService: MusicTheoryService = {
       throw new Error(`Invalid fret number: ${fretNumber}`);
     }
 
-    const noteIndex = (startingNotes[stringIndex] + fretNumber) % 12;
+    const noteIndex = (startingNotes[stringIndex]! + fretNumber) % 12;
     const sharpNote = NOTE_SEQUENCE[noteIndex];
     const flatNote = NOTE_SEQUENCE_FLATS[noteIndex];
 
@@ -67,7 +67,7 @@ export const musicTheoryService: MusicTheoryService = {
       return `${sharpNote}\n${flatNote}`;
     }
 
-    return sharpNote;
+    return sharpNote!;
   },
 
   getNoteSequence: (): string[] => {
@@ -133,8 +133,8 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
   if (strings.length === 6) {
     // Standard 6-string mapping
     adjustedStringIndex = stringIndex;
-    referenceOctave = referenceOctaves[stringIndex];
-    referenceNote = referenceNotes[stringIndex];
+    referenceOctave = referenceOctaves[stringIndex] ?? 2;
+    referenceNote = referenceNotes[stringIndex] ?? 'E';
   } else if (strings.length === 7) {
     // 7-string: string 0 is one octave below, strings 1-6 map to standard 0-5
     if (stringIndex === 0) {
@@ -144,8 +144,8 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
       adjustedStringIndex = 0;
     } else {
       adjustedStringIndex = stringIndex - 1;
-      referenceOctave = referenceOctaves[adjustedStringIndex];
-      referenceNote = referenceNotes[adjustedStringIndex];
+      referenceOctave = referenceOctaves[adjustedStringIndex] ?? 2;
+      referenceNote = referenceNotes[adjustedStringIndex] ?? 'E';
     }
   } else if (strings.length === 8) {
     // 8-string: strings 0-1 are below standard, strings 2-7 map to standard 0-5
@@ -161,14 +161,14 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
       adjustedStringIndex = 1;
     } else {
       adjustedStringIndex = stringIndex - 2;
-      referenceOctave = referenceOctaves[adjustedStringIndex];
-      referenceNote = referenceNotes[adjustedStringIndex];
+      referenceOctave = referenceOctaves[adjustedStringIndex] ?? 2;
+      referenceNote = referenceNotes[adjustedStringIndex] ?? 'E';
     }
   } else if (strings.length === 4 || strings.length === 5) {
     // Bass guitars: map to the first N strings of standard tuning
     adjustedStringIndex = stringIndex;
-    referenceOctave = stringIndex < referenceOctaves.length ? referenceOctaves[stringIndex] : 2;
-    referenceNote = stringIndex < referenceNotes.length ? referenceNotes[stringIndex] : 'E';
+    referenceOctave = stringIndex < referenceOctaves.length ? (referenceOctaves[stringIndex] ?? 2) : 2;
+    referenceNote = stringIndex < referenceNotes.length ? (referenceNotes[stringIndex] ?? 'E') : 'E';
   } else {
     // Fallback for other string counts
     adjustedStringIndex = stringIndex;
@@ -178,7 +178,7 @@ export const getFrequency = (stringIndex: number, fretNumber: number, customStri
 
   // Get note indices
   const referenceNoteIndex = getNoteIndex(referenceNote);
-  const currentNoteIndex = getNoteIndex(strings[stringIndex]);
+  const currentNoteIndex = getNoteIndex(strings[stringIndex]!);
 
   // Calculate semitone difference (accounting for wraparound)
   const semitoneDiff = currentNoteIndex - referenceNoteIndex;
@@ -238,7 +238,7 @@ export const getInterval = (fromNote: string, toNote: string): string => {
     'Major 7th'
   ];
 
-  return intervals[semitones];
+  return intervals[semitones]!;
 };
 
 export const isNatural = (note: string): boolean => {
@@ -275,7 +275,7 @@ export const getScaleNotes = (rootNote: string, scaleType: 'major' | 'minor' | '
   };
 
   const pattern = scalePatterns[scaleType];
-  return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12]);
+  return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12] ?? 'C');
 };
 
 export const getChordNotes = (rootNote: string, chordType: 'major' | 'minor' | 'dominant7'): string[] => {
@@ -291,7 +291,7 @@ export const getChordNotes = (rootNote: string, chordType: 'major' | 'minor' | '
   };
 
   const pattern = chordPatterns[chordType];
-  return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12]);
+  return pattern.map(interval => NOTE_SEQUENCE[(rootIndex + interval) % 12] ?? 'C');
 };
 
 export const getFretboardPositions = (targetNote: string): Array<{ string: number; fret: number }> => {

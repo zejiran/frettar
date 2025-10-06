@@ -69,4 +69,4 @@ export const TUNING_PRESETS: TuningConfig[] = [
 ];
 
 // Default tuning
-export const DEFAULT_TUNING: TuningConfig = TUNING_PRESETS[0]; // E Standard (6)
+export const DEFAULT_TUNING: TuningConfig = TUNING_PRESETS[0]!; // E Standard (6)
