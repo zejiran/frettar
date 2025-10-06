@@ -96,7 +96,7 @@ export const HistoryPanel: React.FC<HistoryPanelProps> = ({
 
   return (
     <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl p-6 mb-4 border border-gray-200">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto py-4">
         <div className="mb-6">
           <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2 mb-4">
             <History className="w-5 h-5" />
