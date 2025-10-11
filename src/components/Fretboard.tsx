@@ -2,7 +2,7 @@ import React from 'react';
 import { FretboardProps } from '@/types';
 import { FretCell } from './FretCell';
 import { musicTheoryService } from '@/utils/musicTheory';
-import { CircleDot, Shell } from 'lucide-react';
+import { Shell } from 'lucide-react';
 
 export const Fretboard: React.FC<FretboardProps> = ({
   fretboardState,
