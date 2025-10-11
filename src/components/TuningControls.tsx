@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TuningControlsProps } from '@/types';
 import { TUNING_PRESETS } from '@/utils/tuningPresets';
 import { ChevronUp, ChevronDown, Guitar } from 'lucide-react';
+import { Dropdown } from './Dropdown';
 
 export const TuningControls: React.FC<TuningControlsProps> = ({
   currentTuning,
@@ -13,16 +14,15 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
 
   const NOTE_SEQUENCE = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-  const handlePresetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const presetName = e.target.value;
+  const handlePresetChange = (presetName: string) => {
     const preset = TUNING_PRESETS.find(p => p.name === presetName);
     if (preset) {
       onTuningChange(preset);
     }
   };
 
-  const handleStringCountChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const count = parseInt(e.target.value);
+  const handleStringCountChange = (value: string) => {
+    const count = parseInt(value);
     onStringCountChange(count);
   };
 
@@ -63,39 +63,33 @@ export const TuningControls: React.FC<TuningControlsProps> = ({
       {isExpanded && (
         <div className="mt-4 space-y-4">
           {/* Tuning Preset Selector */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tuning Preset</label>
-            <select
-              value={currentTuning.name}
-              onChange={handlePresetChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-            >
-              {currentTuning.name === 'Custom' && <option value="Custom">Custom</option>}
-              {TUNING_PRESETS.map(preset => (
-                <option key={preset.name} value={preset.name}>
-                  {preset.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Dropdown
+            label="Tuning Preset"
+            value={currentTuning.name}
+            onChange={handlePresetChange}
+            options={[
+              ...(currentTuning.name === 'Custom' ? [{ value: 'Custom', label: 'Custom' }] : []),
+              ...TUNING_PRESETS.map(preset => ({
+                value: preset.name,
+                label: preset.name,
+              })),
+            ]}
+            maxHeight={400}
+            placeholder="Select tuning preset..."
+          />
 
           {/* Number of Strings */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Number of Strings
-            </label>
-            <select
-              value={currentTuning.strings.length}
-              onChange={handleStringCountChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-            >
-              {[4, 5, 6, 7, 8].map(count => (
-                <option key={count} value={count}>
-                  {count} strings
-                </option>
-              ))}
-            </select>
-          </div>
+          <Dropdown
+            label="Number of Strings"
+            value={currentTuning.strings.length.toString()}
+            onChange={handleStringCountChange}
+            options={[4, 5, 6, 7, 8].map(count => ({
+              value: count.toString(),
+              label: `${count} strings`,
+            }))}
+            maxHeight={400}
+            placeholder="Select string count..."
+          />
 
           {/* Individual String Tuning */}
           <div>

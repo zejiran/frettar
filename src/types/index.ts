@@ -202,6 +202,25 @@ export interface EphemeralUndoDialogProps {
   duration?: number;
 }
 
+export interface DropdownOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface DropdownProps {
+  options: DropdownOption[];
+  value?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  className?: string;
+  onChange: (value: string) => void;
+  maxHeight?: number;
+  searchable?: boolean;
+  label?: string;
+  error?: string;
+}
+
 export interface AppContextType extends AppState {
   setFretboardState: React.Dispatch<React.SetStateAction<FretboardState>>;
   setCurrentColor: React.Dispatch<React.SetStateAction<string>>;
