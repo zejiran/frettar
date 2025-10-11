@@ -4,7 +4,7 @@ import { ExportService, ExportOptions } from '@/types';
 const DEFAULT_EXPORT_OPTIONS: ExportOptions = {
   format: 'png',
   quality: 1.0,
-  scale: 2,
+  scale: 3,
 };
 
 const createFilename = (title?: string, format: string = 'png'): string => {
@@ -40,7 +40,7 @@ export const exportService: ExportService = {
         padding: 40px;
         border-radius: 20px;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        font-family: 'Inter', sans-serif;
+        font-family: 'Poppins', system-ui, -apple-system, sans-serif;
         position: relative;
       `;
 
@@ -49,9 +49,11 @@ export const exportService: ExportService = {
         text-align: center;
         margin-bottom: 30px;
         font-size: 32px;
-        font-weight: bold;
+        font-weight: 700;
         color: #1e293b;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 0.02em;
       `;
 
       if (title && title.trim()) {
@@ -122,6 +124,7 @@ export const exportService: ExportService = {
         htmlCell.style.display = 'flex';
         htmlCell.style.alignItems = 'center';
         htmlCell.style.justifyContent = 'center';
+        htmlCell.style.fontFamily = "'Space Mono', monospace";
 
         const annotation = htmlCell.querySelector('.absolute');
         if (annotation) {
@@ -142,6 +145,7 @@ export const exportService: ExportService = {
           htmlAnnotation.style.overflow = 'visible';
           htmlAnnotation.style.whiteSpace = 'nowrap';
           htmlAnnotation.style.fontWeight = 'bold';
+          htmlAnnotation.style.fontFamily = "'Space Mono', monospace";
         }
       });
 
@@ -154,6 +158,7 @@ export const exportService: ExportService = {
             0 4px 6px -1px rgba(0, 0, 0, 0.1),
             inset 0 1px 0 rgba(255, 255, 255, 0.1);
           text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+          font-family: 'Space Mono', monospace;
         `;
       });
 
@@ -171,6 +176,7 @@ export const exportService: ExportService = {
             display: flex;
             align-items: center;
             justify-content: center;
+            font-family: 'Space Mono', monospace;
           `;
         }
       });
@@ -188,6 +194,7 @@ export const exportService: ExportService = {
           display: flex;
           align-items: center;
           justify-content: center;
+          font-family: 'Space Mono', monospace;
         `;
       }
 
@@ -200,6 +207,7 @@ export const exportService: ExportService = {
         font-size: 14px;
         color: #64748b;
         font-style: italic;
+        font-family: 'Poppins', system-ui, -apple-system, sans-serif;
       `;
       footer.innerHTML = `frettar.pages.dev`;
       exportWrapper.appendChild(footer);
@@ -259,7 +267,7 @@ export const exportToCanvas = async (
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
     `;
 
     if (title && title.trim()) {
@@ -268,9 +276,11 @@ export const exportToCanvas = async (
         text-align: center;
         margin-bottom: 30px;
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 700;
         color: #1e293b;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 0.02em;
       `;
       titleElement.textContent = title.trim();
       exportWrapper.appendChild(titleElement);
