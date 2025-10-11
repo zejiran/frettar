@@ -194,6 +194,14 @@ export interface TuningControlsProps {
   onIndividualStringChange: (stringIndex: number, note: string) => void;
 }
 
+export interface EphemeralUndoDialogProps {
+  isVisible: boolean;
+  message: string;
+  onUndo: () => void;
+  onClose: () => void;
+  duration?: number;
+}
+
 export interface AppContextType extends AppState {
   setFretboardState: React.Dispatch<React.SetStateAction<FretboardState>>;
   setCurrentColor: React.Dispatch<React.SetStateAction<string>>;

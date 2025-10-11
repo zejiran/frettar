@@ -1,5 +1,6 @@
 import { AnnotationModal } from '@/components/AnnotationModal';
 import { Controls } from '@/components/Controls';
+import { EphemeralUndoDialog } from '@/components/EphemeralUndoDialog';
 import { Fretboard as FretboardComponent } from '@/components/Fretboard';
 import { HistoryPanel } from '@/components/HistoryPanel';
 import { SaveModal } from '@/components/SaveModal';
@@ -27,6 +28,8 @@ export const Fretboard: React.FC = () => {
   const [audioVolume, setAudioVolume] = useState(0.3);
   const [noteDuration, setNoteDuration] = useState(1.5);
   const [currentTuning, setCurrentTuning] = useState<TuningConfig>(DEFAULT_TUNING);
+  const [isUndoDialogVisible, setIsUndoDialogVisible] = useState(false);
+  const [previousFretboardState, setPreviousFretboardState] = useState<FretboardState>({});
 
   const fretboardRef = useRef<HTMLDivElement>(null);
   const historyPanelRef = useRef<HTMLDivElement>(null);
@@ -115,11 +118,25 @@ export const Fretboard: React.FC = () => {
 
   const handleClear = useCallback(() => {
     if (Object.keys(fretboardState).length > 0) {
-      if (window.confirm('Are you sure you want to clear all selections?')) {
-        setFretboardState({});
-      }
+      // Store current state for undo functionality
+      setPreviousFretboardState(JSON.parse(JSON.stringify(fretboardState)));
+      // Clear the fretboard
+      setFretboardState({});
+      // Show the ephemeral undo dialog
+      setIsUndoDialogVisible(true);
     }
   }, [fretboardState]);
+
+  const handleUndoClear = useCallback(() => {
+    setFretboardState(previousFretboardState);
+    setIsUndoDialogVisible(false);
+    setPreviousFretboardState({});
+  }, [previousFretboardState]);
+
+  const handleCloseUndoDialog = useCallback(() => {
+    setIsUndoDialogVisible(false);
+    setPreviousFretboardState({});
+  }, []);
 
   const handleExport = useCallback(async () => {
     try {
@@ -354,6 +371,14 @@ export const Fretboard: React.FC = () => {
             setIsAnnotationModalOpen(false);
             setCurrentAnnotationCell(null);
           }}
+        />
+
+        <EphemeralUndoDialog
+          isVisible={isUndoDialogVisible}
+          message="All fret selections and annotations have been cleared."
+          onUndo={handleUndoClear}
+          onClose={handleCloseUndoDialog}
+          duration={5000}
         />
       </div>
     </div>
