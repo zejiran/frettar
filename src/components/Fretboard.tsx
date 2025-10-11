@@ -2,6 +2,7 @@ import React from 'react';
 import { FretboardProps } from '@/types';
 import { FretCell } from './FretCell';
 import { musicTheoryService } from '@/utils/musicTheory';
+import { CircleDot, Shell } from 'lucide-react';
 
 export const Fretboard: React.FC<FretboardProps> = ({
   fretboardState,
@@ -42,7 +43,7 @@ export const Fretboard: React.FC<FretboardProps> = ({
         key={`string-${stringIndex}`}
         className="w-15 h-15 flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-900 text-white font-bold text-lg border-r-2 border-gray-900 shadow-lg"
       >
-        {stringNotes[stringIndex]}
+        <Shell className="w-2.5 text-white" />
       </div>
     );
 
