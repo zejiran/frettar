@@ -107,8 +107,17 @@ export const Controls: React.FC<ExtendedControlsProps> = ({
             <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-3 w-full md:w-auto">
               <button
                 onClick={onClear}
-                className="flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-xl hover:from-gray-700 hover:to-gray-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm md:text-base"
-                title="Clear all fret selections and annotations"
+                disabled={!hasSelectedNotes}
+                className={`flex items-center justify-center gap-1 md:gap-2 px-3 md:px-5 py-2 md:py-3 rounded-xl transition-all duration-200 font-semibold shadow-lg text-sm md:text-base ${
+                  hasSelectedNotes
+                    ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 hover:shadow-xl transform hover:-translate-y-0.5 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                title={
+                  hasSelectedNotes
+                    ? 'Clear all fret selections and annotations'
+                    : 'No notes selected to clear'
+                }
               >
                 <Trash2 className="w-4 h-4 md:w-5 md:h-5" />
                 Clear
