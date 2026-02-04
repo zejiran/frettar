@@ -30,6 +30,7 @@ export const Fretboard: React.FC = () => {
   const [currentTuning, setCurrentTuning] = useState<TuningConfig>(DEFAULT_TUNING);
   const [isUndoDialogVisible, setIsUndoDialogVisible] = useState(false);
   const [previousFretboardState, setPreviousFretboardState] = useState<FretboardState>({});
+  const [previousTitle, setPreviousTitle] = useState<string>('');
 
   const fretboardRef = useRef<HTMLDivElement>(null);
   const historyPanelRef = useRef<HTMLDivElement>(null);
@@ -117,25 +118,30 @@ export const Fretboard: React.FC = () => {
   );
 
   const handleClear = useCallback(() => {
-    if (Object.keys(fretboardState).length > 0) {
+    if (Object.keys(fretboardState).length > 0 || title.length > 0) {
       // Store current state for undo functionality
       setPreviousFretboardState(JSON.parse(JSON.stringify(fretboardState)));
-      // Clear the fretboard
+      setPreviousTitle(title);
+      // Clear the fretboard and title
       setFretboardState({});
+      setTitle('');
       // Show the ephemeral undo dialog
       setIsUndoDialogVisible(true);
     }
-  }, [fretboardState]);
+  }, [fretboardState, title]);
 
   const handleUndoClear = useCallback(() => {
     setFretboardState(previousFretboardState);
+    setTitle(previousTitle);
     setIsUndoDialogVisible(false);
     setPreviousFretboardState({});
-  }, [previousFretboardState]);
+    setPreviousTitle('');
+  }, [previousFretboardState, previousTitle]);
 
   const handleCloseUndoDialog = useCallback(() => {
     setIsUndoDialogVisible(false);
     setPreviousFretboardState({});
+    setPreviousTitle('');
   }, []);
 
   const handleExport = useCallback(async () => {
@@ -326,7 +332,7 @@ export const Fretboard: React.FC = () => {
           onVolumeChange={handleVolumeChange}
           onStopAudio={handleStopAudio}
           onPlayAll={handlePlayAllNotes}
-          hasSelectedNotes={Object.keys(fretboardState).length > 0}
+          hasSelectedNotes={Object.keys(fretboardState).length > 0 || title.length > 0}
           selectedNotesCount={Object.keys(fretboardState).length}
           noteDuration={noteDuration}
           onDurationChange={handleDurationChange}
